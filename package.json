@@ -1,0 +1,45 @@
+{
+    "name": "ironbar",
+    "version": "1.0.0",
+    "description": "Second project IronHack",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon -e hbs,js,css app.js",
+        "seeds": "node ./bin/seeds.js",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/organizationironbar/ironbar.git"
+    },
+    "author": "Marta Aguirrezabala y Daniel Fernández",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/organizationironbar/ironbar/issues"
+    },
+    "homepage": "https://github.com/organizationironbar/ironbar#readme",
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    },
+    "dependencies": {
+        "cookie-parser": "^1.4.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "hbs": "^4.1.1",
+        "mongoose": "^5.10.0",
+        "morgan": "^1.10.0",
+        "path": "^0.12.7",
+        "bcrypt": "^5.0.0",
+        "body-parser": "^1.19.0",
+        "cloudinary": "^1.22.0",
+        "connect-mongo": "^3.2.0",
+        "faker": "^4.1.0",
+        "heroku": "^7.42.8",
+        "multer": "^1.4.2",
+        "multer-storage-cloudinary": "^4.0.0",
+        "nodemailer": "^6.4.10",
+        "passport": "^0.4.1",
+        "passport-slack": "0.0.7"
+    }
+}
