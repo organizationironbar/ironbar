@@ -13,29 +13,45 @@ const generateRandomToken = () => {
 }
 
 const userSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        required: true,
+        default: 'user',
+        enum: ['user', 'stablishment']
+    },
+
     name: {
         type: String,
         required: [true, "Name is required"],
         minlength: [3, "Name needs at last 3 chars"],
         trim: true,
     },
+
     email: {
         type: String,
-        required: [true, "Email is required"],
-        unique: true,
-        trim: true,
+        // required: [true, "Email is required"],
+        // trim: true,
+        // lowercase: true,
+        match: [EMAIL_PATTERN, "Email is invalid"],
+    },
+    contactEmail: {
+        type: String,
+        // trim: true,
         lowercase: true,
         match: [EMAIL_PATTERN, "Email is invalid"],
     },
+    telephone: {
+        type: String,
+        trim: true
+    },
     avatar: {
         type: String,
-        required: true
+
     },
     password: {
         type: String,
         minlength: [8, "password min length is 8"]
     },
-
     bio: {
         type: String
     },
@@ -53,6 +69,25 @@ const userSchema = new mongoose.Schema({
         slackID: String,
         googleID: String,
         facebookID: String
+    },
+    category: {
+        type: String,
+        enum: ['Cafetería', 'Restauración', 'Cervecería', 'Ocio Nocturno', 'Espectáculos'],
+    },
+    location: {
+
+        city: {
+            type: String,
+        },
+        address: {
+            type: String,
+        },
+        number: {
+            type: String
+        },
+        zipCode: {
+            type: String,
+        }
     }
 }, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
@@ -70,8 +105,8 @@ userSchema.pre('save', function(next) {
 
 userSchema.post('remove', function(next) {
     Promise.all([
-            Project.deleteMany({ author: this._id }),
-            Like.deleteMany({ user: this._id }),
+            User.deleteMany({ author: this._id }),
+            Score.deleteMany({ user: this._id }),
             Comment.deleteMany({ user: this._id })
         ])
         .then(next)

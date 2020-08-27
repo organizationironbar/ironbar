@@ -6,3 +6,16 @@ const passport = require('passport')
 module.exports.init = (req, res, next) => {
     res.render('init')
 }
+
+module.exports.createUser = (req, res, next) => {
+
+}
+
+module.exports.doCreateUser = (req, res, next) => {
+    var newUser = req.params.
+    if req.params.stablishmnet
+    location
+
+    save
+
+}

@@ -9,7 +9,14 @@ const uploads = require('../config/multer.config');
 
 
 router.get('/', (req, res) => { res.redirect('init') })
-router.get('/auth/slack', (req, res) => { res.redirect('init') });
+router.get('/auth/instagram', (req, res) => { res.redirect('init') });
+
+router.get('/stablishment/:id', sessionMiddleware.isAuthenticated, projectsController.detail);
+router.post('/stablishment/:id', sessionMiddleware.isAuthenticatedAsStablishment, projectsController.detail);
+
+
+
+
 
 
 module.exports = router;
