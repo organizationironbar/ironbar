@@ -29,14 +29,14 @@ const userSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        // required: [true, "Email is required"],
-        // trim: true,
-        // lowercase: true,
+        required: [true, "Email is required"],
+        trim: true,
+        lowercase: true,
         match: [EMAIL_PATTERN, "Email is invalid"],
     },
     contactEmail: {
         type: String,
-        // trim: true,
+        trim: true,
         lowercase: true,
         match: [EMAIL_PATTERN, "Email is invalid"],
     },
