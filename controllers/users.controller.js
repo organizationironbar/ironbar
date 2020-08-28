@@ -72,3 +72,4 @@ module.exports.doSocialLoginSlack = (req, res, next) => {
     passportController(req, res, next);
    
   }
+

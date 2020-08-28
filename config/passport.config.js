@@ -1,10 +1,10 @@
 const passport = require("passport");
 const User = require("../models/user.model");
+const FacebookStrategy = require('passport-facebook').Strategy
 
 const SlackStrategy = require("passport-slack").Strategy;
 const InstagramStrategy = require('passport-instagram').Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy
 
 const randomPassword = () => Math.random().toString(36).substring(7)
 
@@ -90,10 +90,11 @@ const facebook = new FacebookStrategy({
 
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackUrl: "/",
+    callbackURL: "/auth/facebook",
 
 },
 (accessToken, refreshToken, profile, next) => {
+    console.log(profile.id)
     User.findOne({ "social.facebookID": profile.id })
         .then((user) => {
             if (user) {
@@ -101,8 +102,8 @@ const facebook = new FacebookStrategy({
             } else {
                 const newUser = new User({
                     name: profile.displayName,
-                    email: profile.user.email,
-                    avatar: profile.user.image_1024,
+                    // email: profile.user.email,
+                    // avatar: profile.user.image_1024,
                     password: profile.provider + randomPassword(),
                     social: {
                         slack: profile.id,
