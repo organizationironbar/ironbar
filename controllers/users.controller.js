@@ -46,18 +46,18 @@ module.exports.doSocialLoginSlack = (req, res, next) => {
     passportController(req, res, next);
   }
 
-//   module.exports.doSocialLoginInstagram = (req, res, next) => {
-//     const passportController = passport.authenticate("instagram", (error, user) => {
-//       if (error) {
-//         next(error);
-//       } else {
-//         req.session.userId = user._id;
-//         res.redirect("/");
-//       }
-//     })
+  module.exports.doSocialLoginInstagram = (req, res, next) => {
+    const passportController = passport.authenticate("instagram", (error, user) => {
+      if (error) {
+        next(error);
+      } else {
+        req.session.userId = user._id;
+        res.redirect("/stablishment/list");
+      }
+    })
   
-//     passportController(req, res, next);
-//   }
+    passportController(req, res, next);
+  }
 
   module.exports.doSocialLoginFacebook = (req, res, next) => {
     const passportController = passport.authenticate("facebook", (error, user) => {
@@ -65,7 +65,7 @@ module.exports.doSocialLoginSlack = (req, res, next) => {
         next(error);
       } else {
         req.session.userId = user._id;
-        res.redirect("/");
+        res.redirect("/stablishment/list");
       }
     })
   
@@ -73,3 +73,6 @@ module.exports.doSocialLoginSlack = (req, res, next) => {
    
   }
 
+  module.exports.login = (req, res, next) => {
+    res.render('users/login')
+  }

@@ -8,10 +8,12 @@ const sessionMiddleware = require('../middlewares/session.middleware')
 const uploads = require('../config/multer.config');
 
 
-router.get('/', sessionMiddleware.isNotAuthenticated )
-router.get('/login', sessionMiddleware.isNotAuthenticated )
-// router.get('/auth/instagram', usersController.doSocialLoginInstagram());
+router.get('/', usersController.init  )
+router.get('/login',  usersController.login )
+router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', usersController.doSocialLoginFacebook);
+router.get('/auth/instagram', usersController.doSocialLoginInstagram);
+router.get('/auth/google', usersController.doSocialLoginGoogle);
 
 router.get('/auth/slack', sessionMiddleware.isNotAuthenticated, usersController.doSocialLoginSlack);
 
