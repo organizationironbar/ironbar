@@ -66,6 +66,7 @@ const google = new GoogleStrategy({
                     return;
                 } else {
                     const newUser = new User({
+                        type: 'user',
                         googleID: profile.id,
                         name: profile.displayName,
                         username: profile.emails[0].value.split("@")[0],
@@ -93,19 +94,22 @@ const facebook = new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: "/auth/facebook",
-    profileFields: ['id', 'displayName', 'name', 'gender', 'photos', 'emails']
+    profileFields: ['id', 'displayName', 'name', 'gender', 'photos', 'emails'],
+    scope : ['email'] 
 
 },
 (accessToken, refreshToken, profile, next) => {
-    console.log(profile.emails)
+    
     User.findOne({ "social.facebookID": profile.id })
         .then((user) => {
             if (user) {
                 next(null, user);
             } else {
+                
                 const newUser = new User({
+                    type: 'user',
                     name: profile.displayName,
-                    email: 'qwert@fjhjkh.com',
+                    email: profile.emails[0].value,
                     avatar: profile.photos[0].value,
                     password: profile.provider + randomPassword(),
                     social: {
