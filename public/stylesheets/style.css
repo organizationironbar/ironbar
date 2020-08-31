@@ -1,0 +1,102 @@
+@font-face {
+  font-family: 'rockwell';
+  src: url('../fonts/ROCK.TTF');
+}
+@font-face {
+  font-family: 'rockwellBold';
+  src: url('../fonts/rockb.ttf');
+}
+:root{
+    --verde: #88FFAA;
+    --verdeOscuro: #72DB90;
+    --gris1: #A1A1A1;
+    --gris2: #707070;
+    --negro: #363636;
+    
+}
+
+
+*{
+  font-family: 'rockwell';
+  
+}
+
+body{
+  height: 100vh;
+}
+
+
+.container.login{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+
+.container.login h1{
+  font-family: 'rockwellBold';
+ text-align: center;
+ color: var(--negro);
+ 
+}
+
+body{
+  background-image: url('../images/Recurso\ 5.png');
+  
+}
+
+form{
+  
+  margin: 0 auto;
+  width: 300px;
+}
+
+input.form-control{
+  border-radius: 200px;
+  border: none;
+  box-shadow: 0px 8px 20px var(--gris1);
+}
+
+.btn-primary{
+  background-color: var(--verde);
+  color: var(--negro);
+  border-color: var(--verde);
+  border-radius: 200px;
+  width: 100%;
+}
+.btn-primary:hover{
+  background-color: var(--verdeOscuro);
+  border-color: var(--verdeOscuro);
+  color: var(--negro);
+
+}
+
+.btn-secondary{
+  border-radius: 200px;
+}
+
+
+/* user Type Form */
+
+label {
+  width: 100%;
+}
+
+.card-input-element {
+  display: none;
+}
+
+.card-input {
+  margin: 10px;
+  padding: 00px;
+}
+
+.card-input:hover {
+  cursor: pointer;
+}
+
+.card-input-element:checked + .card-input {
+   box-shadow: 0 0 1px 1px #2ecc71;
+}
