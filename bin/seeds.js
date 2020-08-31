@@ -69,12 +69,14 @@ Promise.all([
                         comment.save()
 
                     }
-                    for (let j = 0; Math.floor(Math.random() * 10); j++) {
+                    for (let j = 0; j < peopleVoting; j++) {
+                        var actualScore = scores[Math.floor(Math.random() * scores.length)]
                         const score = new Score({
                             user: allPeople[Math.floor(Math.random() * allPeople.length)]._id,
                             stablishment: allStabls[Math.floor(Math.random() * allStabls.length)]._id,
-                            score: scores[Math.floor(Math.random() * scores.length)],
+                            score: Math.floor(Math.random() * 10),
                         })
+
                         score.save()
                     }
                 }

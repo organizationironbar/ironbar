@@ -15,7 +15,8 @@ const scoreSchema = new mongoose.Schema({
         required: true,
         type: Number,
         enum: [0, 1, 2, 3, 4, 5]
-    }
+    },
+    total: Number,
 
 }, { timestamps: true });
 

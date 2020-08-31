@@ -18,12 +18,19 @@ app.use(logger("dev"))
 app.use(cookieParser())
 app.use(session)
 app.use(passport)
+app.use(( req, res, next ) => {
+    res.locals.MAPS_API_KEY = process.env.MAPS_API_KEY
+    next()
+
+})
+
     //******/
 
 /** View engine setup */
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
     //******/
+
 
 /** Configure Routes */
 const router = require('./config/routes.js')

@@ -117,3 +117,24 @@ label {
 .card-input-element:checked + .card-input {
    box-shadow: 0 0 1px 1px #2ecc71;
 }
+
+
+#map {
+  height: 30%;
+  width: 80%;
+  float: right;
+}
+
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}

@@ -3,12 +3,18 @@
 
   <div class="card-body">
     <h5 class="card-title"><a href="/stablishments/{{stablishment._id}}" class="text-dark">{{stablishment.name}}</a></h5>
-
+{{!-- 
     {{#if showDescription}}
       <p class="card-text">
         {{stablishment.description}}
       </p>
-    {{/if}}
+    {{/if}} --}}
+
+     
+      <p class="card-text">
+        {{stablishment.bio}}
+      </p>
+    
     
 
 
@@ -18,7 +24,7 @@
 
     <button type="button" class="btn-sm btn btn-outline-danger" data-like-stablishment="{{stablishment.id}}">
       <i class="fa fa-heart mr-1"></i>
-      <span class="likes-count">{{stablishment.score}}</span>
+      <span class="score-count">{{stablishment.score}}</span>
       Score
     </button>
   </div>

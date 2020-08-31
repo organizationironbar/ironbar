@@ -13,6 +13,7 @@ const { stablishmentList } = require('../controllers/stablisnment.controller');
 router.get('/', usersController.init)
 router.get('/login', usersController.login)
 router.post('/login', sessionMiddleware.isNotAuthenticated, usersController.doLogin)
+router.get('/signup', usersController.signup)
 router.get('/signupType', usersController.signupType)
 router.post('/signupType', usersController.signupType)
 router.get('/auth/instagram', usersController.doSocialLoginInstagram);
