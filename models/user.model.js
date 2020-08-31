@@ -12,6 +12,12 @@ const generateRandomToken = () => {
     return token;
 }
 
+function isAddressMandatory() {
+    if (this.type === 'stablishment') {
+        return true;
+    }
+    return false;
+}
 const userSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -76,18 +82,32 @@ const userSchema = new mongoose.Schema({
     },
     location: {
 
+        location: {
+
+            lat: {
+                type: String,
+                required: isAddressMandatory(),
+            },
+            lng: {
+                type: String,
+                required: isAddressMandatory(),
+            },
+        },
         city: {
+            required: isAddressMandatory(),
             type: String,
         },
         address: {
+            required: isAddressMandatory(),
             type: String,
         },
         number: {
             type: String
         },
         zipCode: {
+            required: isAddressMandatory(),
             type: String,
-        }
+        },
     }
 }, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
