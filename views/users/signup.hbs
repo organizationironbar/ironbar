@@ -1,84 +1,185 @@
 <article class="container form">
   <h1>Nuevo usuario</h1>
 
-  <form action="/users" method="POST" enctype="multipart/form-data"> 
+  <form action="/users" method="POST" enctype="multipart/form-data">
     <div class="form-group">
-      <label for="name">Name</label>
+      {{#if (isStablishment type)}}
+        {{type}}
+      {{/if}}
+      <label for="name">Nombre</label>
       <input name="name" type="text" value="{{user.name}}" class="form-control {{#if error.name }}is-invalid{{/if}}" id="name" required>
 
       {{#if error.name}}
         <div class="invalid-feedback">
           {{error.name.message}}
         </div>
-      {{/if}}
+       {{/if}}
     </div>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" value="{{user.email}}" class="form-control {{#if error.email }}is-invalid{{/if}}" id="email" name="email" placeholder="Enter name" required>
 
-      {{#if error.email}}
+    <div class="form-group">
+      <div id="floating-panel">
+        <script>
+          "use strict";
+          function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+              zoom: 8,
+              center: {
+                lat: -34.397,
+                lng: 150.644
+              }
+            });
+            const geocoder = new google.maps.Geocoder();
+            document.getElementById("submit").addEventListener("click", () => {
+              geocodeAddress(geocoder, map);
+            });
+          }
+
+          function geocodeAddress(geocoder, resultsMap) {
+            const address = document.getElementById("address").value;
+            geocoder.geocode(
+              {
+                address: address
+              },
+              (results, status) => {
+                if (status === "OK") {
+                  resultsMap.setCenter(results[0].geometry.location);
+                  console.log(`RESULTADO DEL MAPA: ${JSON.stringify(results[0].formatted_address)}`)
+                  new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location
+                  }
+
+                  );
+                  let addressInput = document.getElementById('addressnew')
+                  addressInput.value = results[0].formatted_address
+                  let latlong = document.getElementById('latlong')
+                  var latlngval = (results[0].geometry.location + '').slice(1,-1).split(',')
+                  latlong.value = [latlngval[0], latlngval[1]]
+                  
+                } else {
+                  alert(
+                    "No se ha encontrado la dirección"
+                  );
+                }
+              }
+            );
+          } 
+        </script>
+        <input id="address" type="textbox" value="" />
+        <input id="submit" type="button" placeholder="Validar dirección" value="Validar dirección" />
+      </div>
+      <div id="map"></div>
+      <div class="form-group">
+        <label for="name">Address</label>
+        <input name="addressnew" type="text" class="form-control {{#if error.name }}is-invalid{{/if}}" id="addressnew"
+          required>
+
+        {{#if error.addressnew}}
+        <div class="invalid-feedback">
+          {{error.name.addressnew}}
+        </div>
+        {{/if}}
+      </div>
+      <div class="form-group" style="display: none">
+        <label for="name">LatLong</label>
+        <input name="latlong" type="text" class="form-control {{#if error.name }}is-invalid{{/if}}" id="latlong"
+          required>
+
+        {{#if error.addressnew}}
+        <div class="invalid-feedback">
+          {{error.name.addressnew}}
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" value="{{user.email}}" class="form-control {{#if error.email }}is-invalid{{/if}}" id="email"
+          name="email" placeholder="Enter name" required>
+
+        {{#if error.email}}
         <div class="invalid-feedback">
           {{error.email.message}}
         </div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
 
      <div class="form-group">
-      <label for="email">Contact Email</label>
-      <input type="email" value="{{user.contactEmail}}" class="form-control {{#if error.constacEmail }}is-invalid{{/if}}" id="contact-email" name="contact-email" placeholder="Enter name" required>
+      <label for="email">Email de contacto</label>
+      <input type="email" value="{{user.contactEmail}}" class="form-control {{#if error.constacEmail }}is-invalid{{/if}}" id="contact-email" name="contact-email" placeholder="email de contacto" required>
 
-      {{#if error.contactEmail}}
+        {{#if error.contactEmail}}
         <div class="invalid-feedback">
           {{error.contactEmail.message}}
         </div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
 
      <div class="form-group">
-      <label for="name">Telephone</label>
+      <label for="name">Teléfono</label>
       <input name="telephone" type="tel" value="{{user.telephone}}" class="form-control {{#if error.telephone }}is-invalid{{/if}}" id="name" required>
 
-      {{#if error.telephone}}
+        {{#if error.telephone}}
         <div class="invalid-feedback">
           {{error.telephone.message}}
         </div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
 
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password">Contraseña</label>
       <input type="password" class="form-control {{#if error.password }}is-invalid{{/if}}" id="password" name="password">
 
-      {{#if error.password}}
+        {{#if error.password}}
         <div class="invalid-feedback">
           {{error.password.message}}
         </div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
 
-    <div class="form-group">
-      <label for="bio">Bio</label>
-      <textarea rows="5" type="text" class="form-control {{#if error.bio }}is-invalid{{/if}}" name="bio" id="bio">{{user.bio}}</textarea>
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea rows="5" type="text" class="form-control {{#if error.bio }}is-invalid{{/if}}" name="bio"
+          id="bio">{{user.bio}}</textarea>
 
-      {{#if error.bio}}
+        {{#if error.bio}}
         <div class="invalid-feedback">
           {{error.bio.message}}
         </div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
 
-    <div class="form-group">
-      <label for="avatar">Avatar</label>
-      <input type="file" class="form-control-file {{#if error.avatar }}is-invalid{{/if}}" id="avatar" name="avatar">
+      <div class="form-group">
+        <label for="avatar">Avatar</label>
+        <input type="file" class="form-control-file {{#if error.avatar }}is-invalid{{/if}}" id="avatar" name="avatar">
 
-      {{#if error.avatar}}
+        {{#if error.avatar}}
         <div class="invalid-feedback">
           {{error.avatar.message}}
         </div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+
+
+{{#unless (isStablishment type)}}
+  <div class="socil-login">
+        <p>Registrate con:</p>
+
+    <div class="d-flex mb-3 justify-content-around">
+     <a href="/auth/facebook" class="btn btn-secondary"><i class="fa fa-facebook"></i> Facebook</a>
+      <a href="/auth/google" class="btn btn-secondary"><i class="fa fa-google"></i> Google</a>
+    </div>
   </form>
+
+{{/unless}}
+
+
+
+
+  </div>
+
+  
 </article>
