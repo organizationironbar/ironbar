@@ -26,16 +26,18 @@ body{
 }
 
 
-.container.login{
+.container.form{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    max-width: 600px;
 }
 
 
-.container.login h1{
+h1{
   font-family: 'rockwellBold';
  text-align: center;
  color: var(--negro);
@@ -43,7 +45,7 @@ body{
 }
 
 body{
-  background-image: url('../images/Recurso\ 5.png');
+  background-image: url('../images/background.png');
   
 }
 
@@ -75,5 +77,21 @@ input.form-control{
 
 .btn-secondary{
   border-radius: 200px;
+}
+
+
+
+.container.form.type .tablet-wraper{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.container.form.type .tablet{
+  width: 150px;
+  border-radius: 10px;
+  background-color: white;
+  height: 200px;
+  box-shadow: 0px 8px 20px var(--gris1);
 }
 

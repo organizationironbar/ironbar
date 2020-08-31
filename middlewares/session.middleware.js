@@ -37,10 +37,25 @@ module.exports.isNotAuthenticated = (req, res, next) => {
     User.findById(req.session.userId)
         .then((user) => {
             if (user) {
-                res.redirect("/");
+                res.redirect("/stablishment/list");
             } else {
                 next();
             }
         })
         .catch(next);
 };
+
+module.exports.userType = (req, res, next) => {
+    
+        
+            if (req.body.type) {
+                res.render("/users/signup", {type: req.body.type});
+            } else {
+                res.redirect("/login");
+            }
+        
+        
+};
+
+
+

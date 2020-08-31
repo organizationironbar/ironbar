@@ -9,7 +9,10 @@ const uploads = require('../config/multer.config');
 
 
 router.get('/', usersController.init  )
-router.get('/login',  usersController.login )
+router.get('/login', sessionMiddleware.isNotAuthenticated, usersController.login )
+router.post('/signup/:type', sessionMiddleware.isNotAuthenticated, usersController.signup )
+
+
 router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', usersController.doSocialLoginFacebook);
 router.get('/auth/instagram', usersController.doSocialLoginInstagram);
