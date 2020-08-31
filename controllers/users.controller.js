@@ -76,3 +76,56 @@ module.exports.doSocialLoginSlack = (req, res, next) => {
   module.exports.login = (req, res, next) => {
     res.render('users/login')
   }
+
+  module.exports.signupType = (req, res, next) => {
+      if(req.body.type){
+        res.render('users/signup', { type : req.body.type })
+      }else{
+        res.render('users/signupType')
+      }
+    
+  }
+
+  module.exports.doLogin = (req, res, next) => {
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (user) {
+          user.checkPassword(req.body.password)
+            .then(match => {
+              if (match) {
+                if (user.activation.active) {
+                  req.session.userId = user._id
+  
+                  res.redirect('/stablishment/list')
+                } else {
+                  res.render('users/login', {
+                    error: {
+                      validation: {
+                        message: 'Your account is not active, check your email!'
+                      }
+                    }
+                  })
+                }
+              } else {
+                res.render('users/login', {
+                  error: {
+                    email: {
+                      message: 'user not found'
+                    }
+                  }
+                })
+              }
+            })
+        } else {
+          res.render("users/login", {
+            error: {
+              email: {
+                message: "user not found",
+              },
+            },
+  
+          });
+        }
+      })
+      .catch(next)
+  }

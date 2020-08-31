@@ -1,0 +1,33 @@
+<div class="card">
+  <img src="{{stablishment.avatar}}" class="card-img-top" alt="...">
+
+  <div class="card-body">
+    <h5 class="card-title"><a href="/stablishments/{{stablishment._id}}" class="text-dark">{{stablishment.name}}</a></h5>
+
+    {{#if showDescription}}
+      <p class="card-text">
+        {{stablishment.description}}
+      </p>
+    {{/if}}
+    
+
+
+    <a href="{{stablishment.url}}" class="btn btn-primary btn-sm" target="_blank">
+      <i class="fa fa-globe mr-1"></i>Stablishment Web
+    </a>
+
+    <button type="button" class="btn-sm btn btn-outline-danger" data-like-stablishment="{{stablishment.id}}">
+      <i class="fa fa-heart mr-1"></i>
+      <span class="likes-count">{{stablishment.score}}</span>
+      Score
+    </button>
+  </div>
+
+  <div>
+    {{stablishment.comments}}
+  </div>
+
+  {{!-- <div class="card-footer">
+    <small class="text-muted">{{date project.createdAt}}</small>
+  </div> --}}
+</div>
