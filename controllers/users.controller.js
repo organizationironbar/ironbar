@@ -147,18 +147,11 @@ module.exports.activateUser = (req, res, next) => {
 }
 
 module.exports.logout = (req, res, next) => {
-        req.session.destroy()
+    req.session.destroy()
 
-        res.redirect('/login')
-    }
-    // module.exports.doCreateUser = (req, res, next) => {
-    //     var newUser = req.params.
-    //     if req.params.stablishmnet
-    //     location
+    res.redirect('/login')
+}
 
-//     save
-
-// }
 
 module.exports.doSocialLoginSlack = (req, res, next) => {
     const passportController = passport.authenticate("slack", (error, user) => {
@@ -266,6 +259,14 @@ module.exports.doLogin = (req, res, next) => {
 
                 });
             }
+        })
+        .catch(next)
+}
+
+module.exports.edit = (req, res, next) => {
+    User.findById(req.params.id)
+        .then(user => {
+            res.render('users/edit', {  user })
         })
         .catch(next)
 }

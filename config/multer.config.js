@@ -11,7 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary,
     params: {
-        folder: "summer-lab",
+        folder: "ironBar",
         allowedFormats: ["jpg", "png", "tiff", "pdf", "html", "word", "js", "hbs"],
     },
 });
