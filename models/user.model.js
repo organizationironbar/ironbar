@@ -89,30 +89,35 @@ const userSchema = new mongoose.Schema({
             "Espectáculos",
         ],
     },
+    ratingsAverage: {
+        type: Number,
+        required: isAddressMandatory,
+        default: 2.5
+    },
     location: {
 
         lat: {
             type: String,
-            required: isAddressMandatory(),
+            required: isAddressMandatory,
         },
         lng: {
             type: String,
-            required: isAddressMandatory(),
+            required: isAddressMandatory,
         },
     },
     city: {
-        required: isAddressMandatory(),
+        required: isAddressMandatory,
         type: String,
     },
     address: {
-        required: isAddressMandatory(),
+        required: isAddressMandatory,
         type: String,
     },
     number: {
         type: String
     },
     zipCode: {
-        required: isAddressMandatory(),
+        required: isAddressMandatory,
         type: String,
     },
 
@@ -134,8 +139,6 @@ userSchema.pre("save", function(next) {
     }
 });
 
-
-
 userSchema.post("remove", function(next) {
     Promise.all([
         User.deleteMany({ author: this._id }),
@@ -147,6 +150,7 @@ userSchema.post("remove", function(next) {
 userSchema.methods.checkPassword = function(password) {
     return bcrypt.compare(password, this.password);
 };
+
 
 userSchema.virtual("comments", {
     ref: "Comment",

@@ -92,7 +92,6 @@ module.exports.createUser = (req, res, next) => {
     } else {
         userParams.avatar = req.file ? `/uploads/${req.file.filename}` : undefined;
         const newUserP = formatUser(userParams)
-        console.log("holacreando")
         const user = new User(newUserP);
 
         user.save()

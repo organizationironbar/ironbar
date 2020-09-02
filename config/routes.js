@@ -25,6 +25,7 @@ router.get('/auth/slack', sessionMiddleware.isNotAuthenticated, usersController.
 
 
 router.get('/stablishments/list', stablishmentController.stablishmentsList);
+// router.get('/stablishments/mapview', stablishmentController.stablishmentsMapView);
 router.get('/stablishment/:id', sessionMiddleware.isAuthenticated);
 router.post('/stablishment/:id', sessionMiddleware.isAuthenticatedAsStablishment);
 

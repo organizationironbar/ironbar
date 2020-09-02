@@ -1,0 +1,60 @@
+<div class="card">
+  <img src="{{stablishment.avatar}}" class="card-img-top" alt="...">
+
+  <div class="card-body">
+    <h5 class="card-title"><a href="/stablishments/{{stablishment._id}}" class="text-dark">{{stablishment.name}}</a>
+    </h5>
+    <p class="card-text">
+      {{stablishment.bio}}
+    </p>
+
+    <a href="{{stablishment.url}}" class="btn btn-primary btn-sm" target="_blank">
+      <i class="fa fa-globe mr-1"></i>Stablishment Web
+    </a>
+
+    <button type="button" class="btn-sm btn btn-outline-danger" data-like-stablishment="{{stablishment.id}}">
+      <i class="fa fa-heart mr-1"></i>
+      <span class="score-count">{{stablishment.ratingsAverage}}</span>
+      Score
+    </button>
+  </div>
+
+  <div>
+    {{stablishment.comments}}
+  </div>
+
+  <div>
+    {{!-- {{stablishment.comments}} --}}
+  </div>
+
+
+  {{!-- marta --}}
+  {{!-- marta lat: "{{stablishment.location.lat}}",
+                lng: "{{stablishment.location.lng}}"--}}
+  <div>
+
+    <div id="floating-panel">
+      <script>
+        "use strict";
+        function initMap() {
+          var myLatLng = {lat: {{ stablishment.location.lat }}, lng: {{ stablishment.location.lng }},};
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 8,
+            center: myLatLng
+            });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+        });
+          } 
+      </script>
+    </div>
+    <div id="map"></div>
+  </div>
+
+
+  {{!-- <div class="card-footer">
+    <small class="text-muted">{{date project.createdAt}}</small>
+  </div> --}}
+</div>

@@ -32,11 +32,15 @@ Promise.all([
                     contactEmail: faker.lorem.word() + '@gmail.com',
                     telephone: faker.phone.phoneNumber(),
                     location: {
-                        address: faker.address.streetName(),
-                        number: Math.floor(Math.random() * 100),
-                        city: faker.address.city(),
-                        zipCode: faker.address.zipCode(),
+                        lat: faker.address.latitude(),
+                        lng: faker.address.longitude(),
                     },
+
+                    address: faker.address.streetName(),
+                    number: Math.floor(Math.random() * 100),
+                    city: faker.address.city(),
+                    zipCode: faker.address.zipCode(),
+
                     avatar: faker.image.avatar(),
                     bio: faker.lorem.sentence(),
                     category: modalities[Math.floor(Math.random() * (modalities.length - 1))],
@@ -58,30 +62,26 @@ Promise.all([
 
             user.save()
 
-            .then(() => {
-                if (allStabls.length > 0 && allPeople.length > 0) {
-                    for (let k = 0; k < Math.floor(Math.random() * 7); k++) {
-                        const comment = new Comment({
-                            user: allPeople[Math.floor(Math.random() * allPeople.length)]._id,
-                            stablishment: allStabls[Math.floor(Math.random() * allStabls.length)]._id,
-                            text: faker.lorem.sentence(),
-                        })
-                        comment.save()
+        }
+    })
+    .then(() => {
+        if (allStabls.length > 0 && allPeople.length > 0) {
+            for (let k = 0; k < Math.floor(Math.random() * 7); k++) {
+                const comment = new Comment({
+                    user: allPeople[Math.floor(Math.random() * allPeople.length)]._id,
+                    stablishment: allStabls[Math.floor(Math.random() * allStabls.length)]._id,
+                    text: faker.lorem.sentence(),
+                })
+                comment.save()
 
-                    }
-                    for (let j = 0; j < peopleVoting; j++) {
-                        var actualScore = scores[Math.floor(Math.random() * scores.length)]
-                        const score = new Score({
-                            user: allPeople[Math.floor(Math.random() * allPeople.length)]._id,
-                            stablishment: allStabls[Math.floor(Math.random() * allStabls.length)]._id,
-                            score: Math.floor(Math.random() * 10),
-                        })
-
-                        score.save()
-                    }
-                }
-            })
-
-
+            }
+            for (let j = 0; j < 100; j++) {
+                const score = new Score({
+                    user: allPeople[Math.floor(Math.random() * allPeople.length)]._id,
+                    stablishment: allStabls[Math.floor(Math.random() * allStabls.length)]._id,
+                    score: Math.floor(Math.random() * 5),
+                })
+                score.save()
+            }
         }
     })
