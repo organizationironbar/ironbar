@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
+
 const usersController = require('../controllers/users.controller')
 const stablishmentController = require('../controllers/stablisnment.controller')
 
@@ -13,9 +13,12 @@ const { stablishmentList } = require('../controllers/stablisnment.controller');
 router.get('/', usersController.init)
 router.get('/login', usersController.login)
 router.post('/login', sessionMiddleware.isNotAuthenticated, usersController.doLogin)
-router.get('/signup', usersController.signup)
 router.get('/signupType', usersController.signupType)
 router.post('/signupType', usersController.signupType)
+router.get('/signup', usersController.signup)
+router.post('/signup',  usersController.createUser)
+
+
 router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', usersController.doSocialLoginFacebook);
 

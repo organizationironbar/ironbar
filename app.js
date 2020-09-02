@@ -21,7 +21,6 @@ app.use(passport)
 app.use(( req, res, next ) => {
     res.locals.MAPS_API_KEY = process.env.MAPS_API_KEY
     next()
-
 })
 
     //******/

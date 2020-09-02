@@ -21,10 +21,8 @@ module.exports.stablishmentsList = (req, res, next) => {
         .then(stablishments => {
             // console.log(stablishments)
             Score.find({ stablishments: stablishments.id })
-                .then(scores => {
-                    console.log(scores)
-                })
-
+               
+            console.log(stablishments)
             res.render('stablishments/list', { stablishments })
         })
         .catch(next)
