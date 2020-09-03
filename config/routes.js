@@ -18,6 +18,10 @@ router.post('/signupType', usersController.signupType)
 router.get('/signup', usersController.signup)
 router.post('/signup',  usersController.createUser)
 
+router.get('/findby', stablishmentController.findby)
+router.post('/findby', stablishmentController.findby)
+router.post('/modality', stablishmentController.stablishmentsList)
+
 
 router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', usersController.doSocialLoginFacebook);
