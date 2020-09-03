@@ -46,16 +46,13 @@ module.exports.isNotAuthenticated = (req, res, next) => {
 };
 
 module.exports.userType = (req, res, next) => {
-    
-        
-            if (req.body.type) {
-                res.render("/users/signup", {type: req.body.type});
-            } else {
-                res.redirect("/login");
-            }
-        
-        
+    console.log("desde middleware" + JSON.stringify(req.body))
+
+    if (req.body.type) {
+        res.render("/users/signup", { type: req.body.type });
+    } else {
+        res.redirect("/login");
+    }
+
+
 };
-
-
-

@@ -4,12 +4,17 @@ const nodemailer = require('../config/mailer.config');
 
 function validateData(userParams) {
     if (userParams.type === 'stablishment') {
-        if (!userParams.addressnew)
+        if (!userParams.addressnew) {
+            console.log("1")
             return 'NOK'
-        else
+        } else {
+            console.log("2")
             return 'OK'
-    } else if (userParams.type === 'user' && !userParams.addressnew)
+        }
+    } else if (userParams.type === 'user' && !userParams.addressnew) {
+        console.log("3")
         return 'OK'
+    }
 }
 
 
@@ -22,6 +27,7 @@ module.exports.signup = (req, res, next) => {
 }
 
 function formatUser(userToFormat) {
+    console.log("userToFormat: " + JSON.stringify(userToFormat))
     var parsedAddress = userToFormat.addressnew.split(',')
     var streetNum, streetName, zipCode, city, zc
     zc = parsedAddress[2].split(' ')
@@ -56,16 +62,16 @@ function formatUser(userToFormat) {
             bio: userToFormat.bio,
 
             category: userToFormat.category,
+
             location: {
-                location: {
-                    lat: latlong[0],
-                    lng: latlong[1],
-                },
-                city: city,
-                address: streetName,
-                number: streetNum != undefined ? streetNum : 0,
-                zipCode: zipCode,
-            }
+                lat: latlong[0],
+                lng: latlong[1],
+            },
+            city: city,
+            address: streetName,
+            number: streetNum != undefined ? streetNum : 0,
+            zipCode: zipCode,
+
         }
     } else {
         newUser = {
@@ -90,8 +96,15 @@ module.exports.createUser = (req, res, next) => {
         res.render("users/signup");
 
     } else {
-        userParams.avatar = req.file ? `/uploads/${req.file.filename}` : undefined;
-        const newUserP = formatUser(userParams)
+        let newUserP
+            // userParams.avatar = req.file ? `/uploads/${req.file.filename}` : undefined;
+        if (userParams.type === 'stablishment') {
+            console.log("type: stablishment")
+            newUserP = formatUser(userParams)
+        } else {
+            console.log("else")
+            newUserP = userParams
+        }
         const user = new User(newUserP);
 
         user.save()
@@ -102,9 +115,14 @@ module.exports.createUser = (req, res, next) => {
                 })
             })
             .catch((error) => {
+                console.log("holaerrormongo")
                 if (error instanceof mongoose.Error.ValidationError) {
+                    console.log("holaerrormongo1")
+
                     res.render("users/signup", { error: error.errors, user });
                 } else if (error.code === 11000) { // error when duplicated user
+                    console.log("holaerrormongo12")
+
                     res.render("users/signup", {
                         user,
                         error: {
@@ -114,6 +132,8 @@ module.exports.createUser = (req, res, next) => {
                         }
                     });
                 } else {
+                    console.log("holaerrormongo3")
+
                     next(error);
                 }
             })
@@ -211,6 +231,7 @@ module.exports.login = (req, res, next) => {
 }
 
 module.exports.signupType = (req, res, next) => {
+    console.log("SIGNUPTYPE: " + JSON.stringify(req.body))
     if (req.body.type) {
         res.render('users/signup', { type: req.body.type })
     } else {

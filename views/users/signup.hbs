@@ -1,11 +1,16 @@
 <article class="container form">
   <h1>Nuevo usuario</h1>
 
-  <form action="/signup" method="POST" enctype="multipart/form-data">
+  <form action="/signup" method="POST">
     <div class="form-group">
       {{!-- {{#if (isStablishment type)}}
         {{type}}
       {{/if}} --}}
+
+      <label for="type">Tipo</label>
+      <input name="type" type="text" value="{{user.type}}" class="form-control {{#if error.type }}is-invalid{{/if}}"
+        id="type" required>
+
       <label for="name">Nombre</label>
       <input name="name" type="text" value="{{user.name}}" class="form-control {{#if error.name }}is-invalid{{/if}}"
         id="name" required>
@@ -42,7 +47,7 @@
       <div id="map"></div>
 
       <input name="addressnew" type="text" class="form-control {{#if error.name }}is-invalid{{/if}}" id="addressnew"
-        required disabled>
+        required>
 
       {{#if error.addressnew}}
       <div class="invalid-feedback">
