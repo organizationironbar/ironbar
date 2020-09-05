@@ -16,12 +16,12 @@ router.post('/login', sessionMiddleware.isNotAuthenticated, usersController.doLo
 router.get('/signupType', usersController.signupType)
 router.post('/signupType', usersController.signupType)
 router.get('/signup', usersController.signup)
-router.post('/signup',  usersController.createUser)
+router.post('/signup', usersController.createUser)
 
 router.get('/findby', stablishmentController.findby)
 router.post('/findby', stablishmentController.findby)
 router.post('/modality', stablishmentController.stablishmentsList)
-
+router.post('/location', stablishmentController.stablishmentsListLocation)
 
 router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', usersController.doSocialLoginFacebook);

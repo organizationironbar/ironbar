@@ -1,0 +1,40 @@
+<article class="container form">
+    <h1>Nuevo usuario</h1>
+
+    <form action="/location" method="POST">
+        <div class="form-group">
+
+            <div class="form-group">
+                <label for="name">Dirección</label>
+                <input id="address" type="textbox" value="" class="form-control" />
+                <input id="submit" type="button" placeholder="Validar dirección" value="Validar dirección"
+                    class="form-control button" />
+                <div id="map"></div>
+
+                <input name="addressnew" type="text" class="form-control {{#if error.name }}is-invalid{{/if}}"
+                    id="addressnew" required>
+
+                {{#if error.addressnew}}
+                <div class="invalid-feedback">
+                    {{error.name.addressnew}}
+                </div>
+                {{/if}}
+            </div>
+            <div class="form-group" style="display: none">
+                <label for="name">LatLong</label>
+                <input name="latlong" type="text" class="form-control {{#if error.name }}is-invalid{{/if}}" id="latlong"
+                    required>
+
+                {{#if error.addressnew}}
+                <div class="invalid-feedback">
+                    {{error.name.addressnew}}
+                </div>
+                {{/if}}
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+
+    </form>
+    </div>
+</article>

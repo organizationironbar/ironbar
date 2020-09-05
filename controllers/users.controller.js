@@ -26,6 +26,7 @@ module.exports.signup = (req, res, next) => {
     res.render('users/signup')
 }
 
+//TODO: REVISAR FORMAT DIRECCIONES
 function formatUser(userToFormat) {
     console.log("userToFormat: " + JSON.stringify(userToFormat))
     var parsedAddress = userToFormat.addressnew.split(',')

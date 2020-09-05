@@ -1,85 +1,116 @@
 const User = require("../models/user.model");
 const Score = require("../models/score.model");
 
-// const catchAsync = require('./../utilities/catchAysnc');
+function formatLocation(loc) {
+    console.log("LOCATION FORMATLOCATION: " + JSON.stringify(loc))
+    var parsedAddress = loc.addressnew.split(',')
+    var streetNum, streetName, zipCode, city, zc
+    parsedAddress.length > 3 ? zc = parsedAddress[2].split(' ') : ''
+    if (parsedAddress.length === 4) {
+        streetNum = parsedAddress[1]
+        streetName = parsedAddress[0]
+        zipCode = zc[0]
+        city = zc[1]
+    } else if (parsedAddress.length === 3) {
+        streetNum = 0
+        streetName = parsedAddress[0]
+        zipCode = zc[0]
+        city = zc[1]
+    } else if (parsedAddress.length === 2) {
+        streetNum = 0
+        streetName = ''
+        zipCode = '0000'
+        city = parsedAddress[0]
+    } else {
+        streetNum = 0
+        streetName = parsedAddress[0]
+        zipCode = '0000'
+        city = parsedAddress[1]
+    }
+    return city
 
-// module.exports.getStablishmentStats = catchAsync(async(req, res, next) => {
-//     const stats = await User.aggregate([{
-//             $match: { ratingsAverage: { $gte: 4.5 } }
-//         },
-//         {
-//             $group: {
-//                 numRatings: { $sum: '$ratingsQuantity' },
-//                 avgRating: { $avg: '$ratingsAverage' },
-//             }
-//         },
-//         {
-//             $sort: { avgPrice: 1 }
-//         }
-//     ]);
+}
 
-//     res.status(200).json({
-//         status: 'success',
-//         data: { stats }
-//     });
-// });
 
 module.exports.stablishmentsList = (req, res, next) => {
-  // const criteria = {}
+    let parsedCategories;
 
-  // if (req.query.search) {
-  //   res.locals.search = req.query.search
-  //   criteria['$or'] = [
-  //     { name: new RegExp(req.query.search, "i") },
-  //     { ['author.name']: new RegExp(req.query.search, "i") },
-  //     { ['staff.name']: new RegExp(req.query.search, "i") }
-  //   ]
-  // }
-  console.log(req.body)
-  User.find({ type: "stablishment" })
+    if (req.body) {
+        parsedCategories = ''
+        for (let a = 0; a < req.body.modality.length; a++) {
+            parsedCategories = `${parsedCategories}{ "category": "${req.body.modality[a]}" }, `
+        }
+        parsedCategories = parsedCategories.slice(0, -2)
+    } else { parsedCategories = {} }
+    var convertToObjc = JSON.parse("[" + parsedCategories + "]")
+    User.find({ type: 'stablishment' }).or(convertToObjc)
+
     .populate("comments")
-    .populate("score")
-    .then((stablishments) => {
-      // console.log(stablishments)
-      stablishments.forEach((stablishment) => {
-        Score.find({ stablishment: stablishment }, function (err, score) {
-          Score.aggregate(
-            [
-              {
-                $group: {
-                  _id: "$stablishment",
-                  ratingsAverage: { $avg: "$score" },
-                },
-              },
-            ],
-            function (err, result) {
-              // console.log(result)
-              User.findOneAndUpdate(
-                { user: stablishment },
-                { $set: { ratingsAverage: result.ratingsAverage } }
-              );
-              // console.log(`stabbbbbbbbbbb ${JSON.stringify(stablishment)}`)
-              // console.log(' ')
-            }
-          );
-        });
-        // .then(score => console.log(Score.find({}).pretty()))
-      });
+        .populate("score")
+        .then((stablishments) => {
+            stablishments.forEach((stablishment) => {
+                Score.find({ stablishment: stablishment }, function(err, score) {
+                    Score.aggregate(
+                        [{
+                            $group: {
+                                _id: "$stablishment",
+                                ratingsAverage: { $avg: "$score" },
+                            },
+                        }, ],
+                        function(err, result) {
+                            User.findOneAndUpdate({ user: stablishment }, { $set: { ratingsAverage: result.ratingsAverage } });
+                        }
+                    );
+                });
+                // .then(score => console.log(Score.find({}).pretty()))
+            });
 
-      res.render("stablishments/list", { stablishments });
-    })
-    .catch(next);
+            res.render("stablishments/list", { stablishments });
+        })
+        .catch(next);
 };
 
-module.exports.findby = (req, res, next) => {
+module.exports.stablishmentsListLocation = (req, res, next) => {
+    let location;
 
-    if(req.body.findby){
-        
-        
-        res.render('stablishments/modality' )
-    }else{
+    req.body ? location = req.body : {}
+    let city = formatLocation(location)
+    console.log("LOCATION: " + JSON.stringify(city))
+    User.find({ type: 'stablishment', city: city })
+
+    .populate("comments")
+        .populate("score")
+        .then((stablishments) => {
+            stablishments.forEach((stablishment) => {
+                Score.find({ stablishment: stablishment }, function(err, score) {
+                    Score.aggregate(
+                        [{
+                            $group: {
+                                _id: "$stablishment",
+                                ratingsAverage: { $avg: "$score" },
+                            },
+                        }, ],
+                        function(err, result) {
+                            User.findOneAndUpdate({ user: stablishment }, { $set: { ratingsAverage: result.ratingsAverage } });
+                        }
+                    );
+                });
+            });
+
+            res.render("stablishments/list", { stablishments });
+        })
+        .catch(next);
+};
+
+
+module.exports.findby = (req, res, next) => {
+    if (req.body.findby === 'modality') {
+        res.render('stablishments/modality')
+    } else if (req.body.findby === 'location') {
+        res.render('stablishments/location')
+    } else {
         res.render("stablishments/findby")
     }
-  
+
 
 };
