@@ -8,9 +8,10 @@
       {{/if}} --}}
 
       <label for="type">Tipo</label>
-      <input name="type" type="text" value="{{user.type}}" class="form-control {{#if error.type }}is-invalid{{/if}}"
+      <input name="type" type="text" value="{{type}}" class="form-control {{#if error.type }}is-invalid{{/if}}"
         id="type" required>
-
+    </div>
+<div class="form-group">
       <label for="name">Nombre</label>
       <input name="name" type="text" value="{{user.name}}" class="form-control {{#if error.name }}is-invalid{{/if}}"
         id="name" required>
