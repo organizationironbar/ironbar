@@ -65,6 +65,7 @@ document.querySelectorAll("[data-score-stablishment]").forEach(el => {
   el.addEventListener("click", function () {
     axios.post(`/user/${this.dataset.scoreStablishment}/score/${this.dataset.scoreValue}`)
       .then(response => {
+        response
         // const scoreContainer = this.querySelector(".score-count")
 
         // scoreContainer.innerText = Number(scoreContainer.innerText) + response.data.like
