@@ -28,13 +28,13 @@ app.use((req, res, next) => {
 /** View engine setup */
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'hbs')
-    //******/
+//******/
 
 
 /** Configure Routes */
 const router = require('./config/routes.js')
 app.use('/', router)
-    /*****/
+/*****/
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Ready!`)
