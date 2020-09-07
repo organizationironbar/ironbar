@@ -28,11 +28,13 @@ router.post('/location', sessionMiddleware.isAuthenticated, stablishmentControll
 router.get('/users/:id/activate/:token', sessionMiddleware.isNotAuthenticated, usersController.activateUser);
 
 // Faltan estas rutas
-router.get('/users/:id', sessionMiddleware.isAuthenticated, usersController.show);
-router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController.edit);
-router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
-router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
+// router.get('/users/:id', sessionMiddleware.isAuthenticated, usersController.show);
+// router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController.edit);
+// router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
+// router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
 //
+
+router.post('/user/:id/score/:scoreValue', sessionMiddleware.isAuthenticated, stablishmentController.score)
 
 // router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', sessionMiddleware.isNotAuthenticated, usersController.doSocialLoginFacebook);

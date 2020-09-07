@@ -43,3 +43,53 @@ function geocodeAddress(geocoder, resultsMap) {
     }
   );
 } 
+
+
+// document.querySelectorAll("[data-enable]").forEach(el => {
+//   el.addEventListener("click", function() {
+//     const target = document.getElementById(this.dataset.enable)
+
+//     target.disabled = !target.disabled
+
+//     if (target.type === "file") {
+//       target.closest("form").enctype = target.disabled ? "application/x-www-form-urlencoded" : "multipart/form-data"
+//     }
+
+//     if (!target.disabled) {
+//       target.click()
+//     }
+//   })
+// })
+
+document.querySelectorAll("[data-score-stablishment]").forEach(el => {
+  el.addEventListener("click", function () {
+    axios.post(`/user/${this.dataset.scoreStablishment}/score/${this.dataset.scoreValue}`)
+      .then(response => {
+        // const scoreContainer = this.querySelector(".score-count")
+
+        // scoreContainer.innerText = Number(scoreContainer.innerText) + response.data.like
+      })
+  })
+})
+
+var $star_rating = $('.star-rating .fa');
+
+var SetRatingStar = function() {
+  return $star_rating.each(function() {
+    if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+      return $(this).removeClass('fa-star-o').addClass('fa-star');
+    } else {
+      return $(this).removeClass('fa-star').addClass('fa-star-o');
+    }
+  });
+};
+
+$star_rating.on('click', function() {
+  $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+  return SetRatingStar();
+});
+
+SetRatingStar();
+$(document).ready(function() {
+
+});
