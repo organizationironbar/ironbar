@@ -90,59 +90,7 @@ function formatUser(userToFormat) {
 
 }
 
-module.exports.createUser = (req, res, next) => {
-    const userParams = req.body;
-    var isValid = validateData(userParams)
-    if (isValid === 'NOK') {
-        res.render("users/signup");
 
-    } else {
-        let newUserP
-            // userParams.avatar = req.file ? `/uploads/${req.file.filename}` : undefined;
-        if (userParams.type === 'stablishment') {
-            console.log("type: stablishment")
-            newUserP = formatUser(userParams)
-        } else {
-            console.log("else")
-            newUserP = userParams
-        }
-        const user = new User(newUserP);
-
-        user.save()
-
-
-            .then(user => {
-                nodemailer.sendValidationEmail(user.name, user.email, user._id, user.activation.token );
-                res.render('users/login', {
-                    message: 'Check your email for activation'
-                })
-            })
-            .catch((error) => {
-                console.log("holaerrormongo")
-                if (error instanceof mongoose.Error.ValidationError) {
-                    console.log("holaerrormongo1")
-
-                    res.render("users/signup", { error: error.errors, user });
-                } else if (error.code === 11000) { // error when duplicated user
-                    console.log("holaerrormongo12")
-
-                    res.render("users/signup", {
-                        user,
-                        error: {
-                            email: {
-                                message: 'user already exists'
-                            }
-                        }
-                    });
-                } else {
-                    console.log("holaerrormongo3")
-
-                    next(error);
-                }
-            })
-            .catch(next)
-    }
-}
 
 module.exports.activateUser = (req, res, next) => {
     User.findOne({ "activation.token": req.params.token })
@@ -287,14 +235,6 @@ module.exports.doLogin = (req, res, next) => {
         .catch(next)
 }
 
-module.exports.edit = (req, res, next) => {
-    User.findById(req.params.id)
-        .then(user => {
-            res.render('users/edit', {  user })
-        })
-        .catch(next)
-}
-
 module.exports.activateUser = (req, res, next) => {
     User.findOne({ _id: req.params.id, "activation.token": req.params.token })
       .then(user => {
@@ -320,3 +260,107 @@ module.exports.activateUser = (req, res, next) => {
       })
       .catch(e => next)
   }
+
+
+// CRUD
+
+module.exports.createUser = (req, res, next) => {
+    const userParams = req.body;
+    var isValid = validateData(userParams)
+    if (isValid === 'NOK') {
+        res.render("users/signup");
+
+    } else {
+        let newUserP
+            // userParams.avatar = req.file ? `/uploads/${req.file.filename}` : undefined;
+        if (userParams.type === 'stablishment') {
+            console.log("type: stablishment")
+            newUserP = formatUser(userParams)
+        } else {
+            console.log("else")
+            newUserP = userParams
+        }
+        const user = new User(newUserP);
+
+        user.save()
+
+
+            .then(user => {
+                nodemailer.sendValidationEmail(user.name, user.email, user._id, user.activation.token );
+                res.render('users/login', {
+                    message: 'Check your email for activation'
+                })
+            })
+            .catch((error) => {
+                console.log("holaerrormongo")
+                if (error instanceof mongoose.Error.ValidationError) {
+                    console.log("holaerrormongo1")
+
+                    res.render("users/signup", { error: error.errors, user });
+                } else if (error.code === 11000) { // error when duplicated user
+                    console.log("holaerrormongo12")
+
+                    res.render("users/signup", {
+                        user,
+                        error: {
+                            email: {
+                                message: 'user already exists'
+                            }
+                        }
+                    });
+                } else {
+                    console.log("holaerrormongo3")
+
+                    next(error);
+                }
+            })
+            .catch(next)
+    }
+}
+module.exports.show = (req, res, next) => {
+    User.findById(req.params.id)
+    .populate("comments")
+    .populate("score")
+      .then(user => {
+        res.render('users/show', { user })
+      })
+      .catch(next)
+}
+module.exports.edit = (req, res, next) => {
+    User.findById(req.params.id)
+        .then(user => {
+            res.render('users/edit', {  user })
+        })
+        .catch(next)
+}
+
+module.exports.update = (req, res, next) => {
+    const body = req.body
+  
+    if (req.file) {
+      body.avatar = req.file.path
+    }
+  
+    User.findByIdAndUpdate(req.params.id, body, { runValidators: true, new: true })
+      .then(user => {
+        if (user) {
+          res.redirect(`/users/${user._id}`)
+        } else {
+          res.redirect('/stablishments/list')
+        }
+      })
+      .catch(next)
+}
+
+module.exports.delete = (req, res, next) => {
+    if (req.params.id.toString() === req.currentUser.id.toString()) {
+      req.currentUser.remove()
+        .then(() => {
+          req.session.destroy()
+          res.redirect("/login")
+        })
+        .catch(next)
+    } else {
+      res.redirect('/projects')
+    }
+}

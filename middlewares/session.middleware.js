@@ -26,7 +26,7 @@ module.exports.isAuthenticatedAsStablishment = (req, res, next) => {
 
                 next()
             } else {
-                res.redirect('/')
+                res.redirect('/stablishments/list')
             }
         })
         .catch(next);

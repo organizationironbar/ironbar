@@ -7,7 +7,7 @@ const stablishmentController = require('../controllers/stablisnment.controller')
 const sessionMiddleware = require('../middlewares/session.middleware')
 const userMiddleware = require('../middlewares/user.middleware')
 
-const uploads = require('../config/multer.config');
+const upload = require('../config/multer.config');
 const { stablishmentList } = require('../controllers/stablisnment.controller');
 
 
@@ -28,11 +28,11 @@ router.post('/location', sessionMiddleware.isAuthenticated, stablishmentControll
 router.get('/users/:id/activate/:token', sessionMiddleware.isNotAuthenticated, usersController.activateUser);
 
 // Faltan estas rutas
-router.get('/users/:id', session.isAuthenticated, usersController.show);
-router.get('/users/:id/edit', session.isAuthenticated, usersController.edit);
-router.post('/users/:id/edit', session.isAuthenticated, upload.single('avatar'), usersController.update);
-router.post('/users/:id/delete', session.isAuthenticated, usersController.delete);
-///
+router.get('/users/:id', sessionMiddleware.isAuthenticated, usersController.show);
+router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController.edit);
+router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
+router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
+//
 
 // router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', sessionMiddleware.isNotAuthenticated, usersController.doSocialLoginFacebook);
