@@ -35,15 +35,20 @@ function formatLocation(loc) {
 module.exports.stablishmentsList = (req, res, next) => {
     let parsedCategories;
 
-    if (req.body) {
+    if (req.body.modality) {
+        
         parsedCategories = ''
         for (let a = 0; a < req.body.modality.length; a++) {
             parsedCategories = `${parsedCategories}{ "category": "${req.body.modality[a]}" }, `
         }
         parsedCategories = parsedCategories.slice(0, -2)
-    } else { parsedCategories = {} }
-    var convertToObjc = JSON.parse("[" + parsedCategories + "]")
+        var convertToObjc = JSON.parse("[" + parsedCategories + "]")
+    } else { 
+        convertToObjc = {} }
+    
+    
     User.find({ type: 'stablishment' }).or(convertToObjc)
+    
 
     .populate("comments")
         .populate("score")

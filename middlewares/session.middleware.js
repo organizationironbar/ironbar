@@ -26,7 +26,7 @@ module.exports.isAuthenticatedAsStablishment = (req, res, next) => {
 
                 next()
             } else {
-                res.redirect('/init')
+                res.redirect('/')
             }
         })
         .catch(next);
@@ -37,7 +37,7 @@ module.exports.isNotAuthenticated = (req, res, next) => {
     User.findById(req.session.userId)
         .then((user) => {
             if (user) {
-                res.redirect("/stablishment/list");
+                res.redirect("/stablishments/list");
             } else {
                 next();
             }

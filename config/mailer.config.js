@@ -11,7 +11,7 @@ const transport = nodemailer.createTransport({
         }
     })
     // console.log(transport.auth)
-module.exports.sendValidationEmail = (email, activationToken, name) => {
+module.exports.sendValidationEmail = ( name, email, id, activationToken ) => {
     transport.sendMail({
         to: email,
         from: `IronBar Team <${user}>`,
@@ -19,7 +19,7 @@ module.exports.sendValidationEmail = (email, activationToken, name) => {
         html: `
 			<h1>Hi ${name}</h1>
 			<p>Click on the button below to activate your account ❤️</p>
-			<a href="${host}/activate/${activationToken}" style="padding: 10px 20px; color: white; background-color: black; border-radius: 5px;">Click here</a>
+			<a href="${host}/users/${id}/activate/${activationToken}" style="padding: 10px 20px; color: white; background-color: pink; border-radius: 5px;">Click here</a>
 		`
     })
 }

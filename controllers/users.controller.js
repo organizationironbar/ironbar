@@ -109,8 +109,10 @@ module.exports.createUser = (req, res, next) => {
         const user = new User(newUserP);
 
         user.save()
+
+
             .then(user => {
-                nodemailer.sendValidationEmail(user.email, user.activation.token, user.name);
+                nodemailer.sendValidationEmail(user.name, user.email, user._id, user.activation.token );
                 res.render('users/login', {
                     message: 'Check your email for activation'
                 })
@@ -206,7 +208,7 @@ module.exports.doSocialLoginInstagram = (req, res, next) => {
             next(error);
         } else {
             req.session.userId = user._id;
-            res.redirect("/stablishment/list");
+            res.redirect("/stablishments/list");
         }
     })
 
@@ -219,7 +221,7 @@ module.exports.doSocialLoginFacebook = (req, res, next) => {
             next(error);
         } else {
             req.session.userId = user._id;
-            res.redirect("/stablishment/list");
+            res.redirect("/stablishments/list");
         }
     })
 
@@ -251,7 +253,7 @@ module.exports.doLogin = (req, res, next) => {
                             if (user.activation.active) {
                                 req.session.userId = user._id
 
-                                res.redirect('/stablishment/list')
+                                res.redirect('/stablishments/list')
                             } else {
                                 res.render('users/login', {
                                     error: {
@@ -292,3 +294,29 @@ module.exports.edit = (req, res, next) => {
         })
         .catch(next)
 }
+
+module.exports.activateUser = (req, res, next) => {
+    User.findOne({ _id: req.params.id, "activation.token": req.params.token })
+      .then(user => {
+        if (user) {
+          user.activation.active = true;
+  
+          user.save()
+            .then(user => {
+              res.render('users/login', {
+                message: 'Your account has been activated, log in below!'
+              })
+            })
+            .catch(e => next)
+        } else {
+          res.render('users/login', {
+            error: {
+              validation: {
+                message: 'Invalid link'
+              }
+            }
+          })
+        }
+      })
+      .catch(e => next)
+  }
