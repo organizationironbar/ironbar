@@ -22,6 +22,10 @@
   
 </head>
 <body>
+  {{#if currentUser}}
+    {{>partials/navbar}}
+  {{/if}}
+
   {{{body}}}
 
  

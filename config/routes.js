@@ -19,6 +19,8 @@ router.post('/signupType', sessionMiddleware.isNotAuthenticated, usersController
 router.get('/signup', sessionMiddleware.isNotAuthenticated, usersController.signup)
 router.post('/signup',  upload.single('avatar'), usersController.createUser)
 
+router.post('/logout', sessionMiddleware.isAuthenticated, usersController.logout)
+
 router.get('/findby', sessionMiddleware.isAuthenticated, stablishmentController.findby)
 router.post('/findby', sessionMiddleware.isAuthenticated, stablishmentController.findby)
 router.post('/modality', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsList)
@@ -28,8 +30,8 @@ router.post('/location', sessionMiddleware.isAuthenticated, stablishmentControll
 router.get('/users/:id/activate/:token', sessionMiddleware.isNotAuthenticated, usersController.activateUser);
 
 // Faltan estas rutas
-// router.get('/users/:id', sessionMiddleware.isAuthenticated, usersController.show);
-// router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController.edit);
+router.get('/users/:id', sessionMiddleware.isAuthenticated, usersController.show);
+router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController.edit);
 // router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
 // router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
 //
@@ -42,7 +44,7 @@ router.get('/auth/google', sessionMiddleware.isNotAuthenticated, usersController
 // router.get('/auth/slack', sessionMiddleware.isNotAuthenticated, usersController.doSocialLoginSlack);
 
 
-router.get('/stablishments/list', stablishmentController.stablishmentsList);
+router.get('/stablishments/list', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsList);
 // router.get('/stablishments/mapview', stablishmentController.stablishmentsMapView);
 router.get('/stablishment/:id', sessionMiddleware.isAuthenticated);
 router.post('/stablishment/:id', sessionMiddleware.isAuthenticatedAsStablishment);
