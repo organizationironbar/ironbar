@@ -31,17 +31,19 @@ function formatUser(userToFormat) {
     console.log("userToFormat: " + JSON.stringify(userToFormat))
     var parsedAddress = userToFormat.addressnew.split(',')
     var streetNum, streetName, zipCode, city, zc
-    zc = parsedAddress[2].split(' ')
+    var split_string;
+    parsedAddress.length >= 3 ? split_string = parsedAddress[2].trim().split(/(\d+)/) : split_string = ['', '0000', 'Unknown City']
+        // split_string = split_string[2].replace(/^ /, '');
     if (parsedAddress.length === 4) {
         streetNum = parsedAddress[1]
         streetName = parsedAddress[0]
-        zipCode = zc[0]
-        city = zc[1]
+        zipCode = split_string[1]
+        city = split_string[2]
     } else if (parsedAddress.length === 3) {
         streetNum = 0
         streetName = parsedAddress[0]
-        zipCode = zc[0]
-        city = zc[1]
+        zipCode = split_string[1]
+        city = split_string[2]
     } else {
         streetNum = 0
         streetName = parsedAddress[0]
@@ -237,29 +239,29 @@ module.exports.doLogin = (req, res, next) => {
 
 module.exports.activateUser = (req, res, next) => {
     User.findOne({ _id: req.params.id, "activation.token": req.params.token })
-      .then(user => {
-        if (user) {
-          user.activation.active = true;
-  
-          user.save()
-            .then(user => {
-              res.render('users/login', {
-                message: 'Your account has been activated, log in below!'
-              })
-            })
-            .catch(e => next)
-        } else {
-          res.render('users/login', {
-            error: {
-              validation: {
-                message: 'Invalid link'
-              }
+        .then(user => {
+            if (user) {
+                user.activation.active = true;
+
+                user.save()
+                    .then(user => {
+                        res.render('users/login', {
+                            message: 'Your account has been activated, log in below!'
+                        })
+                    })
+                    .catch(e => next)
+            } else {
+                res.render('users/login', {
+                    error: {
+                        validation: {
+                            message: 'Invalid link'
+                        }
+                    }
+                })
             }
-          })
-        }
-      })
-      .catch(e => next)
-  }
+        })
+        .catch(e => next)
+}
 
 
 // CRUD
@@ -285,8 +287,8 @@ module.exports.createUser = (req, res, next) => {
         user.save()
 
 
-            .then(user => {
-                nodemailer.sendValidationEmail(user.name, user.email, user._id, user.activation.token );
+        .then(user => {
+                nodemailer.sendValidationEmail(user.name, user.email, user._id, user.activation.token);
                 res.render('users/login', {
                     message: 'Check your email for activation'
                 })
@@ -319,12 +321,12 @@ module.exports.createUser = (req, res, next) => {
 }
 module.exports.show = (req, res, next) => {
     User.findById(req.params.id)
-    .populate("comments")
-    .populate("score")
-      .then(user => {
-        res.render('users/show', { user })
-      })
-      .catch(next)
+        .populate("comments")
+        .populate("score")
+        .then(user => {
+            res.render('users/show', { user })
+        })
+        .catch(next)
 }
 module.exports.edit = (req, res, next) => {
     User.findById(req.params.id)
@@ -336,31 +338,31 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.update = (req, res, next) => {
     const body = req.body
-  
+
     if (req.file) {
-      body.avatar = req.file.path
+        body.avatar = req.file.path
     }
-  
+
     User.findByIdAndUpdate(req.params.id, body, { runValidators: true, new: true })
-      .then(user => {
-        if (user) {
-          res.redirect(`/users/${user._id}`)
-        } else {
-          res.redirect('/stablishments/list')
-        }
-      })
-      .catch(next)
+        .then(user => {
+            if (user) {
+                res.redirect(`/users/${user._id}`)
+            } else {
+                res.redirect('/stablishments/list')
+            }
+        })
+        .catch(next)
 }
 
 module.exports.delete = (req, res, next) => {
     if (req.params.id.toString() === req.currentUser.id.toString()) {
-      req.currentUser.remove()
-        .then(() => {
-          req.session.destroy()
-          res.redirect("/login")
-        })
-        .catch(next)
+        req.currentUser.remove()
+            .then(() => {
+                req.session.destroy()
+                res.redirect("/login")
+            })
+            .catch(next)
     } else {
-      res.redirect('/projects')
+        res.redirect('/projects')
     }
 }
