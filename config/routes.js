@@ -34,7 +34,7 @@ router.get('/users/:id/activate/:token', sessionMiddleware.isNotAuthenticated, u
 // router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
 //
 
-router.post('/user/:id/score/:scoreValue', sessionMiddleware.isAuthenticated, stablishmentController.score)
+router.post('/stablishments/:id/like', sessionMiddleware.isAuthenticated, stablishmentController.like)
 
 // router.get('/auth/instagram', usersController.doSocialLoginInstagram);
 router.get('/auth/facebook', sessionMiddleware.isNotAuthenticated, usersController.doSocialLoginFacebook);

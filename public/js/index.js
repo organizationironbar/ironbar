@@ -45,52 +45,67 @@ function geocodeAddress(geocoder, resultsMap) {
 } 
 
 
-// document.querySelectorAll("[data-enable]").forEach(el => {
-//   el.addEventListener("click", function() {
-//     const target = document.getElementById(this.dataset.enable)
+document.querySelectorAll("[data-enable]").forEach(el => {
+  el.addEventListener("click", function() {
+    const target = document.getElementById(this.dataset.enable)
 
-//     target.disabled = !target.disabled
+    target.disabled = !target.disabled
 
-//     if (target.type === "file") {
-//       target.closest("form").enctype = target.disabled ? "application/x-www-form-urlencoded" : "multipart/form-data"
-//     }
+    if (target.type === "file") {
+      target.closest("form").enctype = target.disabled ? "application/x-www-form-urlencoded" : "multipart/form-data"
+    }
 
-//     if (!target.disabled) {
-//       target.click()
-//     }
-//   })
-// })
+    if (!target.disabled) {
+      target.click()
+    }
+  })
+})
 
-document.querySelectorAll("[data-score-stablishment]").forEach(el => {
+document.querySelectorAll("[data-like-stablishment]").forEach(el => {
   el.addEventListener("click", function () {
-    axios.post(`/user/${this.dataset.scoreStablishment}/score/${this.dataset.scoreValue}`)
+    axios.post(`/stablishments/${this.dataset.likeStablishment}/like`)
       .then(response => {
-        response
-        // const scoreContainer = this.querySelector(".score-count")
+        const likesContainer = this.querySelector(".likes-count")
 
-        // scoreContainer.innerText = Number(scoreContainer.innerText) + response.data.like
+        likesContainer.innerText = Number(likesContainer.innerText) + response.data.like
       })
   })
 })
 
-var $star_rating = $('.star-rating .fa');
+// var $star_rating = $('.star-rating .fa');
 
-var SetRatingStar = function() {
-  return $star_rating.each(function() {
-    if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-      return $(this).removeClass('fa-star-o').addClass('fa-star');
-    } else {
-      return $(this).removeClass('fa-star').addClass('fa-star-o');
-    }
-  });
-};
+// var SetRatingStar = function(event) {
+//   console.log(event)
+//   var star = event.currentTarget
+//   var starParent = event.currentTarget.parentNode
+//   var nodeListStars = starParent.querySelectorAll('.fa')
+//   var starsArr = Array.from(nodeListStars);
+//   var starValue =  star.dataset.scoreValue
+//   var  a = 0
+//   starsArr.forEach((element) => {
+//     console.log(element)
+    
+        
+//     if ( parseInt(starParent.querySelector('input.rating-value').value) >= starValue ) {
+//       console.log(parseInt(starParent.querySelector('input.rating-value').value))
+//       element.classList.remove('fa-star-o').classList.add('fa-star');
+//     } else {
+//       console.log('else')
+//        element.classList.remove('fa-star').classList.add('fa-star-o');
+//     }
+//   });
+// };
 
-$star_rating.on('click', function() {
-  $star_rating.siblings('input.rating-value').val($(this).data('rating'));
-  return SetRatingStar();
-});
+// $star_rating.on('click', function(event) {
+//   $star_rating.siblings('input.rating-value').val($(this).data('scoreValue'));
+  
+//   return SetRatingStar(event);
+// });
 
-SetRatingStar();
-$(document).ready(function() {
+// SetRatingStar();
+// $(document).ready(function() {
 
-});
+// });
+
+
+

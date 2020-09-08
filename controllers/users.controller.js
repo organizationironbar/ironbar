@@ -322,7 +322,7 @@ module.exports.createUser = (req, res, next) => {
 module.exports.show = (req, res, next) => {
     User.findById(req.params.id)
         .populate("comments")
-        .populate("score")
+        .populate("likes")
         .then(user => {
             res.render('users/show', { user })
         })
