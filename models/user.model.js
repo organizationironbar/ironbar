@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-const Score = require('../models/score.model')
+const Like = require('../models/like.model')
 const Comment = require('../models/comments.model')
 
 
@@ -89,11 +89,7 @@ const userSchema = new mongoose.Schema({
             "Espectáculos",
         ],
     },
-    ratingsAverage: {
-        type: Number,
-        required: isAddressMandatory,
-        default: 2.5
-    },
+   
     location: {
         lat: {
             type: Number,
@@ -141,7 +137,7 @@ userSchema.pre("save", function(next) {
 userSchema.post("remove", function(next) {
     Promise.all([
         User.deleteMany({ author: this._id }),
-        Score.deleteMany({ user: this._id }),
+        Like.deleteMany({ user: this._id }),
         Comment.deleteMany({ user: this._id }),
     ]).then(next);
 });
@@ -158,8 +154,8 @@ userSchema.virtual("comments", {
     justOne: false,
 });
 
-userSchema.virtual("score", {
-    ref: "Score",
+userSchema.virtual("likes", {
+    ref: "Like",
     localField: "_id",
     foreignField: "stablishment",
     count: true,

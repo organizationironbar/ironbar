@@ -2,19 +2,20 @@ require("../config/db.config");
 
 const User = require("../models/user.model");
 const Comment = require("../models/comments.model");
-const Score = require("../models/score.model")
+const Like = require("../models/like.model")
 
 const modalities = ['Cafetería', 'Restauración', 'Cervecería', 'Ocio Nocturno', 'Espectáculos']
-const scores = [0, 1, 2, 3, 4, 5]
+
 const allStabls = []
 const allPeople = []
-const faker = require("faker")
+const faker = require("faker");
+
 
 
 Promise.all([
         User.deleteMany(),
         Comment.deleteMany(),
-        Score.deleteMany(),
+        Like.deleteMany(),
     ])
     .then(() => {
         console.log('empty database')
@@ -76,12 +77,12 @@ Promise.all([
 
             }
             for (let j = 0; j < 100; j++) {
-                const score = new Score({
+                const like = new Like({
                     user: allPeople[Math.floor(Math.random() * allPeople.length)]._id,
                     stablishment: allStabls[Math.floor(Math.random() * allStabls.length)]._id,
-                    score: Math.floor(Math.random() * 5),
+                    
                 })
-                score.save()
+                like.save()
             }
         }
     })

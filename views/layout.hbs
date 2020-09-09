@@ -20,6 +20,10 @@
   
 </head>
 <body>
+  {{#if currentUser}}
+    {{>partials/navbar}}
+  {{/if}}
+
   {{{body}}}
 
    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{MAPS_API_KEY}}&callback=initMap"

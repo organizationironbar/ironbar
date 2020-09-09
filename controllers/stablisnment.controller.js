@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const Score = require("../models/score.model");
+const Like = require("../models/like.model");
 
 function formatLocation(loc) {
     console.log("LOCATION FORMATLOCATION: " + JSON.stringify(loc));
@@ -51,24 +51,9 @@ module.exports.stablishmentsList = (req, res, next) => {
         .or(convertToObjc)
 
     .populate("comments")
-        .populate("score")
+        .populate("likes")
         .then((stablishments) => {
-            stablishments.forEach((stablishment) => {
-                Score.find({ stablishment: stablishment }, function(err, score) {
-                    Score.aggregate(
-                        [{
-                            $group: {
-                                _id: "$stablishment",
-                                ratingsAverage: { $avg: "$score" },
-                            },
-                        }, ],
-                        function(err, result) {
-                            User.findOneAndUpdate({ user: stablishment }, { $set: { ratingsAverage: result.ratingsAverage } });
-                        }
-                    );
-                });
-                // .then(score => console.log(Score.find({}).pretty()))
-            });
+
 
             res.render("stablishments/list", { stablishments });
         })
@@ -84,23 +69,9 @@ module.exports.stablishmentsListLocation = (req, res, next) => {
     User.find({ type: "stablishment", city: city })
 
     .populate("comments")
-        .populate("score")
+        .populate("likes")
         .then((stablishments) => {
-            stablishments.forEach((stablishment) => {
-                Score.find({ stablishment: stablishment }, function(err, score) {
-                    Score.aggregate(
-                        [{
-                            $group: {
-                                _id: "$stablishment",
-                                ratingsAverage: { $avg: "$score" },
-                            },
-                        }, ],
-                        function(err, result) {
-                            User.findOneAndUpdate({ user: stablishment }, { $set: { ratingsAverage: result.ratingsAverage } });
-                        }
-                    );
-                });
-            });
+
 
             res.render("stablishments/list", { stablishments });
         })
@@ -114,10 +85,15 @@ module.exports.stablishmentsListLocationMap = (req, res, next) => {
     let city = formatLocation(location);
     console.log("LOCATION: " + JSON.stringify(city));
     User.find({ type: "stablishment", city: city })
+        //revisar si necesitamos populate
+        .populate("comments")
+        .populate("likes")
+        .then((stablishments) => {
+            stablishments.forEach((stablishment) => {
 
-    .then((stablishments) => {
-            console.log(stablishments)
-            res.render("stablishments/listmap", { stablishments });
+            });
+
+            res.render("stablishments/list", { stablishments });
         })
         .catch(next);
 };
@@ -133,39 +109,24 @@ module.exports.findby = (req, res, next) => {
 };
 
 
-module.exports.score = (req, res, next) => {
-    const scoreValue = req.params.scoreValue
+module.exports.like = (req, res, next) => {
+
     const params = { stablishment: req.params.id, user: req.currentUser._id };
 
-
-    Score.findOne(params)
-        .then(newscore => {
-
-            if (newscore) {
-                Score.findByIdAndRemove(newscore._id)
+    Like.findOne(params)
+        .then(like => {
+            if (like) {
+                Like.findByIdAndRemove(like._id)
                     .then(() => {
-                        res.json({ score: -1 });
+                        res.json({ like: -1 });
                     })
                     .catch(next);
             } else {
-                const newScore = new Score({ stablishment: req.params.id, user: req.currentUser._id, score: scoreValue });
+                const newLike = new Like(params);
 
-                newScore.save()
-                    // .then(() => {
-                    //   res.json({ score: 1 });
-
-                // })
-                .then(() => {
-                        Score.find({ stablishment: req.params.id })
-                            .then(allScores => {
-                                let sumatoria = allScores.reduce((function(acumulador, siguienteValor) {
-                                        return acumulador + siguienteValor.score;
-
-                                    }), 0
-
-                                )
-                                let result = sumatoria / allScores.length
-                            })
+                newLike.save()
+                    .then(() => {
+                        res.json({ like: 1 });
                     })
                     .catch(next);
             }
