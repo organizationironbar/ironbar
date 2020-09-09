@@ -17,7 +17,7 @@ router.post('/login', sessionMiddleware.isNotAuthenticated, usersController.doLo
 router.get('/signupType', sessionMiddleware.isNotAuthenticated, usersController.signupType)
 router.post('/signupType', sessionMiddleware.isNotAuthenticated, usersController.signupType)
 router.get('/signup', sessionMiddleware.isNotAuthenticated, usersController.signup)
-router.post('/signup',  upload.single('avatar'), usersController.createUser)
+router.post('/signup', sessionMiddleware.isNotAuthenticated, upload.single('avatar'), usersController.createUser)
 
 router.post('/logout', sessionMiddleware.isAuthenticated, usersController.logout)
 
@@ -29,11 +29,11 @@ router.post('/location', sessionMiddleware.isAuthenticated, stablishmentControll
 
 router.get('/users/:id/activate/:token', sessionMiddleware.isNotAuthenticated, usersController.activateUser);
 
-// Faltan estas rutas
+// CRUD
 router.get('/users/:id', sessionMiddleware.isAuthenticated, usersController.show);
 router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController.edit);
-// router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
-// router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
+router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
+router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
 //
 
 router.post('/stablishments/:id/like', sessionMiddleware.isAuthenticated, stablishmentController.like)
@@ -46,8 +46,8 @@ router.get('/auth/google', sessionMiddleware.isNotAuthenticated, usersController
 
 router.get('/stablishments/list', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsList);
 // router.get('/stablishments/mapview', stablishmentController.stablishmentsMapView);
-router.get('/stablishment/:id', sessionMiddleware.isAuthenticated);
-router.post('/stablishment/:id', sessionMiddleware.isAuthenticatedAsStablishment);
+// router.get('/stablishment/:id', sessionMiddleware.isAuthenticated);
+// router.post('/stablishment/:id', sessionMiddleware.isAuthenticatedAsStablishment);
 
 
 
