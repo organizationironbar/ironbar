@@ -84,9 +84,10 @@
         {{#if (isStablishment type)}}
 
     <div class="form-group">
-      <label for="email">Email de contacto</label>
+      <label for="contactEmail">Email de contacto</label>
       <input type="email" value="{{user.contactEmail}}"
-        class="form-control {{#if error.constacEmail }}is-invalid{{/if}}" id="contact-email" name="contact-email"
+        class="form-control {{#if error.constacEmail }}is-invalid{{/if}}" id="contact-email" name="contactEmail
+"
         placeholder="email de contacto" required>
 
       {{#if error.contactEmail}}
@@ -97,7 +98,7 @@
     </div>
 
     <div class="form-group">
-      <label for="name">Teléfono</label>
+      <label for="telephone">Teléfono</label>
       <input name="telephone" type="tel" value="{{user.telephone}}"
         class="form-control {{#if error.telephone }}is-invalid{{/if}}" id="telephone" required>
 

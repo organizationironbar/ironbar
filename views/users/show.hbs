@@ -1,12 +1,13 @@
 <article class="container">
   <div class="row">
-    <div class="col-2">
+    {{!-- <div class="col-2">
       <img class="w-100 rounded-circle" src="{{user.avatar}}" />
-    </div>
+    </div> --}}
 
     <div class="col-10">
+      <img src="{{user.avatar}}" width="100" class="mr-2 rounded-circle"/>
       <h1>{{user.name}}</h1>
-      <p>{{user.bio}}</p>
+      <p><strong>Bio:</strong> {{user.bio}}</p>
       <p><strong>Email:</strong> {{user.email}}</p>
 
       

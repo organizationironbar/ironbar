@@ -21,7 +21,10 @@
 }
 
 body {
-    min-height: 100vh;
+
+  min-height: 100vh;
+  padding: 70px 10px;
+
 }
 
 .splash {
@@ -179,11 +182,7 @@ label {
     margin: 20px 0;
 }
 
-.star-rating {
-    line-height: 32px;
-    font-size: 1.25em;
-}
+h6.little-title{
+  color: var(--gris2)
 
-.star-rating .fa-star {
-    color: yellow;
 }

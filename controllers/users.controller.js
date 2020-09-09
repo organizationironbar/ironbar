@@ -272,7 +272,8 @@ module.exports.createUser = (req, res, next) => {
     res.render("users/signup");
   } else {
     let newUserP;
-    // userParams.avatar = req.file ? `/uploads/${req.file.filename}` : undefined;
+    //userParams.avatar = req.file ? `/uploads/${req.file.filename}` : undefined;
+    userParams.avatar = req.file ? req.file.path : undefined
     if (userParams.type === "stablishment") {
       console.log("type: stablishment");
       newUserP = formatUser(userParams);
@@ -333,6 +334,7 @@ module.exports.show = (req, res, next) => {
     .catch(next);
 };
 module.exports.edit = (req, res, next) => {
+ console.log( req.params.id)
   User.findById(req.params.id)
     .then((user) => {
       res.render("users/edit", { user });
@@ -371,7 +373,7 @@ module.exports.delete = (req, res, next) => {
       })
       .catch(next);
   } else {
-    res.redirect("/projects");
+    res.redirect("/stablishments/list");
   }
 };
 

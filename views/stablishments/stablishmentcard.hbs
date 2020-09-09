@@ -2,7 +2,11 @@
   <img src="{{stablishment.avatar}}" class="card-img-top" alt="...">
 
   <div class="card-body">
-    <h5 class="card-title"><a href="/stablishments/{{stablishment._id}}" class="text-dark">{{stablishment.name}}</a>
+    <h5 class="card-title"><a href="/stablishments/{{stablishment._id}}" class="text-dark">{{stablishment.name}}</a>    <button type="button" class="btn-sm btn float-right" data-like-stablishment="{{stablishment._id}}">
+      <i class="fa fa-heart mr-1"></i>
+      <span class="likes-count">{{stablishment.likes}}</span>
+      Likes
+    </button>
     </h5>
     <p class="card-text">
       {{stablishment.bio}}
@@ -12,20 +16,30 @@
       <i class="fa fa-globe mr-1"></i>Stablishment Web
     </a> --}}
 
-    
-    <button type="button" class="btn-sm btn btn-outline-danger" data-like-stablishment="{{stablishment._id}}">
-      <i class="fa fa-heart mr-1"></i>
-      <span class="likes-count">{{stablishment.likes}}</span>
-      Likes
-    </button>
 
-    
+
+
+<h6 class="little-title">Bio</h6>
+    <p>{{stablishment.bio}}</p>
+
+
+      {{#if stablishment.comments}}
+<h6 class="little-title">Comments</h6>
+
+    {{#each stablishment.comments as |comment|}}
+    <div class="comment">
       
+      {{comment.text}}
+    </div>
+    {{/each}}
+
+  {{/if}}
+
+
+
+
   </div>
 
-  <div>
-    {{stablishment}}
-  </div>
 
   <div>
     {{!-- {{stablishment.comments}} --}}
@@ -40,11 +54,12 @@
       <script>
         "use strict";
         function initMap() {
-          var myLatLng = {lat: {{ stablishment.location.lat }}, lng: {{ stablishment.location.lng }},};
-          const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 8,
-            center: myLatLng
-            });
+          var myLatLng = { lat: {{ stablishment.location.lat }
+        }, lng: { { stablishment.location.lng } },};
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 8,
+          center: myLatLng
+        });
 
         var marker = new google.maps.Marker({
           position: myLatLng,
