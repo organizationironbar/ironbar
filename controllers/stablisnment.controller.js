@@ -115,14 +115,9 @@ module.exports.stablishmentsListLocationMap = (req, res, next) => {
     console.log("LOCATION: " + JSON.stringify(city));
     User.find({ type: "stablishment", city: city })
 
-    .populate("comments")
-        .populate("score")
-        .then((stablishments) => {
-            stablishments.forEach((stablishment) => {
-
-            });
-
-            res.render("stablishments/list", { stablishments });
+    .then((stablishments) => {
+            console.log(stablishments)
+            res.render("stablishments/listmap", { stablishments });
         })
         .catch(next);
 };

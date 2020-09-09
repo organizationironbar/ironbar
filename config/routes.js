@@ -17,13 +17,13 @@ router.post('/login', sessionMiddleware.isNotAuthenticated, usersController.doLo
 router.get('/signupType', sessionMiddleware.isNotAuthenticated, usersController.signupType)
 router.post('/signupType', sessionMiddleware.isNotAuthenticated, usersController.signupType)
 router.get('/signup', sessionMiddleware.isNotAuthenticated, usersController.signup)
-router.post('/signup',  upload.single('avatar'), usersController.createUser)
+router.post('/signup', upload.single('avatar'), usersController.createUser)
 
 router.get('/findby', sessionMiddleware.isAuthenticated, stablishmentController.findby)
 router.post('/findby', sessionMiddleware.isAuthenticated, stablishmentController.findby)
 router.post('/modality', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsList)
 router.post('/location', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsListLocation)
-
+router.post('/locationbymap', stablishmentController.stablishmentsListLocationMap)
 
 router.get('/users/:id/activate/:token', sessionMiddleware.isNotAuthenticated, usersController.activateUser);
 
