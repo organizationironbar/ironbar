@@ -50,10 +50,10 @@ module.exports.stablishmentsList = (req, res, next) => {
     User.find({ type: "stablishment" })
         .or(convertToObjc)
 
-        .populate("comments")
+    .populate("comments")
         .populate("likes")
         .then((stablishments) => {
-        
+
 
             res.render("stablishments/list", { stablishments });
         })
@@ -71,7 +71,7 @@ module.exports.stablishmentsListLocation = (req, res, next) => {
     .populate("comments")
         .populate("likes")
         .then((stablishments) => {
-    
+
 
             res.render("stablishments/list", { stablishments });
         })
@@ -85,8 +85,8 @@ module.exports.stablishmentsListLocationMap = (req, res, next) => {
     let city = formatLocation(location);
     console.log("LOCATION: " + JSON.stringify(city));
     User.find({ type: "stablishment", city: city })
-
-    .populate("comments")
+        //revisar si necesitamos populate
+        .populate("comments")
         .populate("likes")
         .then((stablishments) => {
             stablishments.forEach((stablishment) => {
@@ -110,26 +110,26 @@ module.exports.findby = (req, res, next) => {
 
 
 module.exports.like = (req, res, next) => {
-    
+
     const params = { stablishment: req.params.id, user: req.currentUser._id };
 
     Like.findOne(params)
-      .then(like => {
-        if (like) {
-          Like.findByIdAndRemove(like._id)
-            .then(() => {
-              res.json({ like: -1 });
-            })
-            .catch(next);
-        } else {
-          const newLike = new Like(params);
-  
-          newLike.save()
-            .then(() => {
-              res.json({ like: 1 });
-            })
-            .catch(next);
-        }
-      })
-      .catch(next);
+        .then(like => {
+            if (like) {
+                Like.findByIdAndRemove(like._id)
+                    .then(() => {
+                        res.json({ like: -1 });
+                    })
+                    .catch(next);
+            } else {
+                const newLike = new Like(params);
+
+                newLike.save()
+                    .then(() => {
+                        res.json({ like: 1 });
+                    })
+                    .catch(next);
+            }
+        })
+        .catch(next);
 }

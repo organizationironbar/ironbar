@@ -1,0 +1,22 @@
+<h3>My Google Maps Demo</h3>
+
+{{stablishments}}
+<!--The div element for the map -->
+<div id="googleMap"></div>
+<script charset="UTF-8">
+    // Initialize and add the map
+    function initMap() {
+        // The location of Uluru
+        var uluru = { lat: 40.4172093, lng: -3.7024276 };
+        console.log("uluru" + uluru)
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+            document.getElementById('googleMap'), { zoom: 4, center: uluru });
+        // The marker, positioned at Uluru
+        {{#each stablishments as | stablishment | }}
+        var location = {{{ stablishment.location }}}
+    console.log("salporfavor" + JSON.stringify(location))
+    var marker = new google.maps.Marker({ position: { lat: +location.lat, lng: +location.lng }, map: map });
+    {{/each}}
+        }
+</script>
