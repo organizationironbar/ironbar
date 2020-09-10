@@ -1,8 +1,13 @@
-<h1>List</h1>
+<h1>Lista de</h1>
+<h1> | {{#each convertToObjc as |modality|}}
+  {{modality.category}}|
+  {{/each}}
+  
+   </h1>
 
 <div class="row">
  
- {{findby}}
+ 
   {{#each stablishments as |stablishment|}}
     <div class="col-xl-4 col-lg-6 col-sm-12 mb-4">
       {{>stablishments/stablishmentcard stablishment=stablishment }}

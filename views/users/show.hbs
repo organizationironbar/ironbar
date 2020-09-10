@@ -5,31 +5,48 @@
     </div> --}}
 
     <div class="col-10">
-      <img src="{{user.avatar}}" width="100" class="mr-2 rounded-circle"/>
+      <img src="{{user.avatar}}" width="100" class="mr-2 rounded-circle" />
       <h1>{{user.name}}</h1>
       <p><strong>Bio:</strong> {{user.bio}}</p>
       <p><strong>Email:</strong> {{user.email}}</p>
 
-      
-      {{#ifEquals currentUser.email user.email}}
-        <div>
-          <a class="btn btn-secondary" href="/users/{{currentUser._id}}/edit">
-            <i class="fa fa-edit mr-2"></i>
-            Edit
-          </a>
+      {{#if (isStablishment user.type)}}
+      <div id="map"></div>
 
-          <form action="/users/{{currentUser._id}}/delete" method="POST" class="mt-2">
-            <button type="submit" class="btn btn-danger">
-              <i class="fa fa-trash mr-2"></i>
-              Remove account
-            </button>
-          </form>
-        </div>
+      <script>
+        // Dani, esto está mal, no funciona por cómo recibimos la location, he probado a mandarla de otras formas pero sigue cascando.
+        // En el controller ya lo estamos convirtiendo a Number y son el mismo tipo pero naaaaa
+        console.log("hola")
+        var decodedJson = decodeURIComponent("{{{location}}}");
+        console.log("decodedjson: " + JSON.stringify({{location}}))
+        var jsonObj = JSON.parse(decodedJson);
+        console.log("JSONOB IN SHOW: " + jsonObj)
+        console.log("JSONOB IN SHOW: " + JSON.stringify(jsonObj))
+
+        window.points = [jsonObj];
+      </script>
+
+      {{/if}}
+
+      {{#ifEquals currentUser.email user.email}}
+      <div>
+        <a class="btn btn-secondary" href="/users/{{currentUser._id}}/edit">
+          <i class="fa fa-edit mr-2"></i>
+          Edit
+        </a>
+
+        <form action="/users/{{currentUser._id}}/delete" method="POST" class="mt-2">
+          <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash mr-2"></i>
+            Remove account
+          </button>
+        </form>
+      </div>
       {{/ifEquals}}
     </div>
   </div>
 
-  
 
-  
+
+
 </article>

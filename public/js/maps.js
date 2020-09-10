@@ -1,17 +1,42 @@
-"use strict";
-
 function initMap() {
-    const map = new google.maps.Map(document.getElementById("map"), {
+    let map = new google.maps.Map(document.getElementById("map"), {
         zoom: 8,
         center: {
-            lat: -34.397,
-            lng: 150.644
+            lat: 41,
+            lng: -3.4
         }
     });
-    const geocoder = new google.maps.Geocoder();
-    document.getElementById("submit").addEventListener("click", () => {
-        geocodeAddress(geocoder, map);
-    });
+    console.log(window.points)
+    if (window.points) {
+        console.log("hola")
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 11,
+            center: {
+                lat: parseFloat(window.points[0].location.lat),
+                lng: parseFloat(window.points[0].location.lng)
+            }
+        });
+        window.points.forEach(function(stablishment) {
+            var position = new google.maps.LatLng({
+                lat: parseFloat(window.points[0].location.lat),
+                lng: parseFloat(window.points[0].location.lng)
+            })
+            console.log("JSONNNNNN : " + JSON.stringify(position))
+            new google.maps.Marker({
+                position: {
+                    lat: parseFloat(window.points[0].location.lat),
+                    lng: parseFloat(window.points[0].location.lng)
+                },
+                map: map
+            })
+        })
+    } else {
+
+        const geocoder = new google.maps.Geocoder();
+        document.getElementById("submit").addEventListener("click", () => {
+            geocodeAddress(geocoder, map);
+        });
+    }
 }
 
 function geocodeAddress(geocoder, resultsMap) {

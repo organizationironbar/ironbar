@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 
@@ -26,6 +25,7 @@ router.get('/findby', sessionMiddleware.isAuthenticated, stablishmentController.
 router.post('/findby', sessionMiddleware.isAuthenticated, stablishmentController.findby)
 router.post('/modality', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsList)
 router.post('/location', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsListLocation)
+router.post('/locationbymap', sessionMiddleware.isAuthenticated, stablishmentController.stablishmentsListLocationMap)
 
 
 router.get('/users/:id/activate/:token', sessionMiddleware.isNotAuthenticated, usersController.activateUser);
@@ -35,7 +35,8 @@ router.get('/users/:id', sessionMiddleware.isAuthenticated, usersController.show
 router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController.edit);
 router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
 router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
-//
+
+router.get('/stablishments/:id', sessionMiddleware.isAuthenticated, usersController.show);
 
 router.post('/stablishments/:id/like', sessionMiddleware.isAuthenticated, stablishmentController.like)
 

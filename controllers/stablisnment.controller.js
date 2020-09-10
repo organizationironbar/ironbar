@@ -31,8 +31,10 @@ function formatLocation(loc) {
 }
 
 module.exports.stablishmentsList = (req, res, next) => {
-    let parsedCategories;
 
+
+    let parsedCategories;
+    console.log("HOLA : " + JSON.stringify(req.body.modality))
     if (typeof req.body.modality == 'string') {
         var convertToObjc = JSON.parse(`[{ "category": "${req.body.modality}" }]`);
     } else if (typeof req.body.modality != 'string' && req.body.modality != undefined) {
@@ -55,7 +57,7 @@ module.exports.stablishmentsList = (req, res, next) => {
         .then((stablishments) => {
 
 
-            res.render("stablishments/list", { stablishments });
+            res.render("stablishments/list", { stablishments, convertToObjc });
         })
         .catch(next);
 };
@@ -89,11 +91,10 @@ module.exports.stablishmentsListLocationMap = (req, res, next) => {
         .populate("comments")
         .populate("likes")
         .then((stablishments) => {
-            stablishments.forEach((stablishment) => {
-
+            res.render("stablishments/listmap", {
+                stablishments,
+                pointsJSON: encodeURIComponent(JSON.stringify(stablishments))
             });
-
-            res.render("stablishments/list", { stablishments });
         })
         .catch(next);
 };
