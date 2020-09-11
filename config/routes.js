@@ -36,7 +36,8 @@ router.get('/users/:id/edit', sessionMiddleware.isAuthenticated, usersController
 router.post('/users/:id/edit', sessionMiddleware.isAuthenticated, upload.single('avatar'), usersController.update);
 router.post('/users/:id/delete', sessionMiddleware.isAuthenticated, usersController.delete);
 
-router.get('/stablishments/:id', sessionMiddleware.isAuthenticated, usersController.show);
+
+// router.get('/stablishments/:id', sessionMiddleware.isAuthenticated, stablishmentController.show);
 
 router.post('/stablishments/:id/like', sessionMiddleware.isAuthenticated, stablishmentController.like)
 

@@ -32,7 +32,7 @@ function formatLocation(loc) {
 
 module.exports.stablishmentsList = (req, res, next) => {
 
-
+    
     let parsedCategories;
     console.log("HOLA : " + JSON.stringify(req.body.modality))
     if (typeof req.body.modality == 'string') {
@@ -55,6 +55,9 @@ module.exports.stablishmentsList = (req, res, next) => {
     .populate("comments")
         .populate("likes")
         .then((stablishments) => {
+
+
+            
 
 
             res.render("stablishments/list", { stablishments, convertToObjc });
@@ -134,3 +137,4 @@ module.exports.like = (req, res, next) => {
         })
         .catch(next);
 }
+
