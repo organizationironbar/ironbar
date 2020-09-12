@@ -2,51 +2,19 @@
   <img src="{{stablishment.avatar}}" class="card-img-top" alt="...">
 
   <div class="card-body">
-    <h5 class="card-title"><a href="/stablishments/{{stablishment._id}}" class="text-dark">{{stablishment.name}}</a>    <button type="button" class="btn-sm btn float-right" data-like-stablishment="{{stablishment._id}}">
-      <i class="fa fa-heart mr-1"></i>
-      <span class="likes-count">{{stablishment.likes}}</span>
-      Likes
-    </button>
+    <h5 class="card-title"><a href="/stablishments/{{stablishment._id}}" class="text-dark">{{stablishment.name}}</a>
+      <button type="button" class="btn-sm btn float-right" data-like-stablishment="{{stablishment._id}}">
+        <i class="fa fa-heart mr-1"></i>
+        <span class="likes-count">{{stablishment.likes}}</span>
+        Likes
+      </button>
     </h5>
-    <h6 class="little-title">Categoría</h6>
+    <h6 class="little-title">Categoría: </h6>
     <p>{{stablishment.category}}</p>
-    
-    <p class="card-text">
-      {{stablishment.bio}}
-    </p>
 
-    {{!-- <a href="{{stablishment.url}}" class="btn btn-primary btn-sm" target="_blank">
-      <i class="fa fa-globe mr-1"></i>Stablishment Web
-    </a> --}}
-
-
-
-<h6 class="little-title">Bio</h6>
+    <h6 class="little-title">Descripción</h6>
     <p>{{stablishment.bio}}</p>
 
-{{!-- Dani, estos comments aquí?  --}}
-
-      {{#if stablishment.comments}}
-    <h6 class="little-title">Comments</h6>
-
-    {{#each stablishment.comments as |comment|}}
-    <div class="comment">
-      
-      {{comment.text}}
-    </div>
-    {{/each}}
-
-  {{/if}}
-
-
-
-
   </div>
-
-
-  <div>
-    {{!-- {{stablishment.comments}} --}}
-  </div>
-
 
 </div>

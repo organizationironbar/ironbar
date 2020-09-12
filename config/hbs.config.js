@@ -18,3 +18,8 @@ hbs.registerHelper('isStablishment', function (value) {
     return value === 'stablishment';
   });
   
+
+  hbs.registerHelper('category', function (value) {
+    return value.length > 0;
+  });
+  

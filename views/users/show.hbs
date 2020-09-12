@@ -4,10 +4,10 @@
       <img class="w-100 rounded-circle" src="{{user.avatar}}" />
     </div> --}}
 
-    <div class="col-10">
-      <img src="{{user.avatar}}" width="100%"  />
+    <div>
+      <img src="{{user.avatar}}" width="100%" />
       <h1>{{user.name}}</h1>
-      <p><strong>Bio:</strong> {{user.bio}}</p>
+      <p><strong>Descripción:</strong> {{user.bio}}</p>
       <p><strong>Email:</strong> {{user.email}}</p>
       <strong>Send an email for reservation: </strong><a
         href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{user.contactEmail}}"
@@ -48,54 +48,56 @@
       </div>
       {{/ifEquals}}
 
- 
+
 
       {{#if user.comments}}
-   
+
       <h6 class="little-title">Comments</h6>
 
       {{#each user.comments as |comment|}}
-      {{comment.user.name}}
-      
-   
-        
 
 
       <div class="comment">
-
-        
+        <span class="email">{{ comment.user.email }}</span>
+<div class="comment-container">
           <p>{{comment.text}}</p>
-        
-      </div>
-       
+  {{#ifEquals comment.user.email ../currentUser.email}}
 
-        {{#ifEquals comment.user.email ../currentUser.email}}
-       
-       <form action="/comments/{{comment._id}}/delete" method="POST">
-            <button type="submit" class="mt-1 btn btn-sm btn-danger">
-              <i class="fa fa-trash"></i>
-            </button>
-          </form>
-        {{/ifEquals}}
-        
+      <form action="/comments/{{comment._id}}/delete" method="POST" class="form-delete-comment">
+        <button type="submit" class="mt-1 btn btn-sm btn-danger">
+          <i class="fa fa-trash"></i>
+        </button>
+      </form>
+      {{/ifEquals}}
+
+</div>
+
+
+
+      </div>
+
+
+
+    
+
       {{/each}}
-       
+
 
       {{/if}}
 
-       
 
 
-      <form action="/comments" method="POST">
-          <input type="hidden" name="stablishment" value="{{user._id}}" />
 
-          <textarea rows="5" type="text" class="form-control mb-3" name="text" id="text" required></textarea>
+      <form action="/comments" method="POST" class="comment-form">
+        <input type="hidden" name="stablishment" value="{{user._id}}" />
 
-          <button type="submit" class="btn btn-outline-success">
-            <i class="fa fa-plus mr-2"></i>
-            Add comment
-          </button>
-        </form>
+        <textarea rows="5" type="text" class="form-control mb-3" name="text" id="text" required></textarea>
+
+        <button type="submit" class="btn btn-outline-success">
+          <i class="fa fa-plus mr-2"></i>
+          Add comment
+        </button>
+      </form>
     </div>
   </div>
 

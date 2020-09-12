@@ -1,21 +1,25 @@
+{{#if (category convertToObjc)}}
 <h1>Lista de</h1>
 <h1> | {{#each convertToObjc as |modality|}}
   {{modality.category}}|
   {{/each}}
-  
-   </h1>
+
+</h1>
+{{else}}
+<h1>Establecimientos</h1>
+
+{{/if}}
+
+
+
 
 <div class="row">
- 
- 
+
+
   {{#each stablishments as |stablishment|}}
-    <div class="col-xl-4 col-lg-6 col-sm-12 mb-4">
-      {{>stablishments/stablishmentcard stablishment=stablishment }}
-    </div>
-  {{!-- {{else}}
-    <p>
-      No stablishments matching search: <i>{{search}}</i>.<br/>
-      <a href="/stablishments">All stablishments</a>
-    </p> --}}
+  <div class="col-xl-4 col-lg-6 col-sm-12 mb-4">
+    {{>stablishments/stablishmentcard stablishment=stablishment }}
+  </div>
+
   {{/each}}
 </div>

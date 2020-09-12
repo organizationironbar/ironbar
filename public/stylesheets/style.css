@@ -14,15 +14,17 @@
     --gris1: #a1a1a1;
     --gris2: #707070;
     --negro: #363636;
+    
 }
 
 * {
     font-family: "rockwell";
+    
 }
 
 body {
 
-  min-height: 100vh;
+  min-height: calc(100vh - 20px);
   padding: 10px 10px;
 
 }
@@ -30,7 +32,7 @@ body {
 .splash {
     background-color: var(--negro);
     background-image: url("../images/backgroundBlack.png");
-    height: 100vh;
+    min-height: calc(100vh - 20px);
     color: white;
     display: flex;
     justify-content: center;
@@ -43,6 +45,9 @@ body {
     text-align: center;
     width: 100%;
 }
+.splash .logo-splash{
+    margin: 30px;
+}
 
 .splash a {
     width: 80%;
@@ -50,7 +55,7 @@ body {
 }
 
 .container.form {
-    margin-top: 50px;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,6 +63,10 @@ body {
     min-height: 100vh;
     width: 100%;
     max-width: 600px;
+}
+
+.container.form h1{
+    margin-bottom: 30px;
 }
 
 h1 {
@@ -121,6 +130,9 @@ select.form-control {
 label {
     width: 100%;
 }
+.card{
+    height: 100%;
+}
 
 .card-input-element {
     display: none;
@@ -144,6 +156,7 @@ label {
     /* box-shadow: 0px 8px 20px var(--gris1); */
     border-radius: 10px;
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .icon {
@@ -183,6 +196,49 @@ label {
 }
 
 h6.little-title{
-  color: var(--gris2)
+  color: var(--verdeOscuro)
 
+}
+
+.fa.fa-heart{
+    color: var(--verdeOscuro)
+}
+
+.comment .email{
+    color: #707070;
+    font-size: 12px;
+}
+
+.card-title{
+    font-size: 35px;
+}
+
+h5 a:hover{
+    text-decoration: none;
+}
+
+.navbar{
+    margin-bottom: 30px;
+    background-color: var(--verde);
+}
+.show #map{
+    margin-top: 20px
+}
+
+.show h1{
+    margin: 20px auto
+}
+.show form{
+    max-width: 100%
+}
+.comment-form{
+    width: 100%;
+}
+.show .form-delete-comment{
+    max-width: unset;
+    width: unset
+
+}
+.comment-container{
+    display: flex;
 }
