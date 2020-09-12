@@ -4,7 +4,7 @@
       <img class="w-100 rounded-circle" src="{{user.avatar}}" />
     </div> --}}
 
-    <div>
+    <div style= "margin: 0 auto;">
       <img src="{{user.avatar}}" width="100%" />
       <h1>{{user.name}}</h1>
       <p><strong>Descripción:</strong> {{user.bio}}</p>
@@ -12,21 +12,15 @@
       <strong>Send an email for reservation: </strong><a
         href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{user.contactEmail}}"
         target="_blank">{{user.contactEmail}}</a>
-
       {{#if (isStablishment user.type)}}
       <div id="map"></div>
+      <p>{{user.location}}</p>
 
       <script>
-        // Dani, esto está mal, no funciona por cómo recibimos la location, he probado a mandarla de otras formas pero sigue cascando.
-        // En el controller ya lo estamos convirtiendo a Number y son el mismo tipo pero naaaaa
-        console.log("hola")
-        var decodedJson = decodeURIComponent("{{{location}}}");
-        console.log("decodedjson: " + JSON.stringify({{ location }}))
-        var jsonObj = JSON.parse(decodedJson);
-        console.log("JSONOB IN SHOW: " + jsonObj)
-        console.log("JSONOB IN SHOW: " + JSON.stringify(jsonObj))
-
-        window.points = [jsonObj];
+        console.log("sdasdasda")
+        var decodedJson = decodeURIComponent("{{{user.location}}}");
+        console.log("decodedjson: " + JSON.stringify(decodedJson))
+        window.points = [{{user.location}}, ''];
       </script>
 
       {{/if}}
