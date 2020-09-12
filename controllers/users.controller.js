@@ -324,6 +324,7 @@ module.exports.createUser = (req, res, next) => {
             .catch(next);
     }
 };
+
 module.exports.show = (req, res, next) => {
     User.findById(req.params.id)
         .populate("comments")
@@ -340,8 +341,8 @@ module.exports.show = (req, res, next) => {
         })
         .catch(next);
 };
+
 module.exports.edit = (req, res, next) => {
-    console.log(req.params.id)
     User.findById(req.params.id)
         .then((user) => {
             res.render("users/edit", { user });

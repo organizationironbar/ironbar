@@ -8,6 +8,9 @@
       Likes
     </button>
     </h5>
+    <h6 class="little-title">Categoría</h6>
+    <p>{{stablishment.category}}</p>
+    
     <p class="card-text">
       {{stablishment.bio}}
     </p>
@@ -18,13 +21,13 @@
 
 
 
-
 <h6 class="little-title">Bio</h6>
     <p>{{stablishment.bio}}</p>
 
+{{!-- Dani, estos comments aquí?  --}}
 
       {{#if stablishment.comments}}
-<h6 class="little-title">Comments</h6>
+    <h6 class="little-title">Comments</h6>
 
     {{#each stablishment.comments as |comment|}}
     <div class="comment">

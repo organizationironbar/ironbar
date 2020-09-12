@@ -9,6 +9,9 @@
       <h1>{{user.name}}</h1>
       <p><strong>Bio:</strong> {{user.bio}}</p>
       <p><strong>Email:</strong> {{user.email}}</p>
+      <strong>Send an email for reservation: </strong><a
+        href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{user.contactEmail}}"
+        target="_blank">{{user.contactEmail}}</a>
 
       {{#if (isStablishment user.type)}}
       <div id="map"></div>
@@ -18,7 +21,7 @@
         // En el controller ya lo estamos convirtiendo a Number y son el mismo tipo pero naaaaa
         console.log("hola")
         var decodedJson = decodeURIComponent("{{{location}}}");
-        console.log("decodedjson: " + JSON.stringify({{location}}))
+        console.log("decodedjson: " + JSON.stringify({{ location }}))
         var jsonObj = JSON.parse(decodedJson);
         console.log("JSONOB IN SHOW: " + jsonObj)
         console.log("JSONOB IN SHOW: " + JSON.stringify(jsonObj))
@@ -43,6 +46,30 @@
         </form>
       </div>
       {{/ifEquals}}
+
+
+      {{#if user.comments}}
+      <h6 class="little-title">Comments</h6>
+
+      {{#each user.comments as |comment|}}
+      <div class="comment">
+
+        {{comment.text}}
+      </div>
+      {{/each}}
+
+      {{/if}}
+
+      <form action="/comments" method="POST">
+          <input type="hidden" name="stablishment" value="{{user._id}}" />
+
+          <textarea rows="5" type="text" class="form-control mb-3" name="text" id="text" required></textarea>
+
+          <button type="submit" class="btn btn-outline-success">
+            <i class="fa fa-plus mr-2"></i>
+            Add comment
+          </button>
+        </form>
     </div>
   </div>
 
