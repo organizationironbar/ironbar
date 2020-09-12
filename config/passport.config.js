@@ -52,7 +52,8 @@ const google = new GoogleStrategy({
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: "/auth/google",
         scope: ['https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email']
+            'https://www.googleapis.com/auth/userinfo.email'
+        ]
     },
     (accessToken, refreshToken, profile, done) => {
         // to see the structure of the data in received response:
@@ -91,87 +92,87 @@ const google = new GoogleStrategy({
 
 const facebook = new FacebookStrategy({
 
-    clientID: process.env.FACEBOOK_CLIENT_ID,
-    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: "/auth/facebook",
-    profileFields: ['id', 'displayName', 'name', 'gender', 'photos', 'emails'],
-    scope : ['email'] 
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: "/auth/facebook",
+        profileFields: ['id', 'displayName', 'name', 'gender', 'photos', 'emails'],
+        scope: ['email']
 
-},
-(accessToken, refreshToken, profile, next) => {
+    },
+    (accessToken, refreshToken, profile, next) => {
 
-    User.findOne({ "social.facebookID": profile.id })
-        .then((user) => {
-            if (user) {
-                next(null, user);
-            } else {
+        User.findOne({ "social.facebookID": profile.id })
+            .then((user) => {
+                if (user) {
+                    next(null, user);
+                } else {
 
-                const newUser = new User({
-                    type: 'user',
-                    name: profile.displayName,
-                    email: profile.emails[0].value,
-                    avatar: profile.photos[0].value,
-                    password: profile.provider + randomPassword(),
-                    social: {
-                        facebook: profile.id,
-                    },
-                    activation: {
-                        active: true
-                    }
-                });
+                    const newUser = new User({
+                        type: 'user',
+                        name: profile.displayName,
+                        email: profile.emails[0].value,
+                        avatar: profile.photos[0].value,
+                        password: profile.provider + randomPassword(),
+                        social: {
+                            facebook: profile.id,
+                        },
+                        activation: {
+                            active: true
+                        }
+                    });
 
-                newUser
-                    .save()
-                    .then((user) => {
-                        next(null, user);
-                    })
-                    .catch((err) => next(err));
-            }
-        })
-        .catch((err) => next(err));
-}
+                    newUser
+                        .save()
+                        .then((user) => {
+                            next(null, user);
+                        })
+                        .catch((err) => next(err));
+                }
+            })
+            .catch((err) => next(err));
+    }
 );
 
 
 
 const instagram = new InstagramStrategy({
 
-    clientID: process.env.INSTAGRAM_CLIENT_ID,
-    clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
-    callbackURL: "/auth/instagram",
-    profileFields: ['id', 'displayName', 'name', 'gender', 'photos', 'emails']
+        clientID: process.env.INSTAGRAM_CLIENT_ID,
+        clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
+        callbackURL: "/auth/instagram",
+        profileFields: ['id', 'displayName', 'name', 'gender', 'photos', 'emails']
 
-},
-(accessToken, refreshToken, profile, next) => {
-    console.log(profile.emails)
-    User.findOne({ "social.instagramID": profile.id })
-        .then((user) => {
-            if (user) {
-                next(null, user);
-            } else {
-                const newUser = new User({
-                    name: profile.displayName,
-                    email: 'qwert@fjhjkh.com',
-                    avatar: profile.photos[0].value,
-                    password: profile.provider + randomPassword(),
-                    social: {
-                        facebook: profile.id,
-                    },
-                    activation: {
-                        active: true
-                    }
-                });
+    },
+    (accessToken, refreshToken, profile, next) => {
+        console.log(profile.emails)
+        User.findOne({ "social.instagramID": profile.id })
+            .then((user) => {
+                if (user) {
+                    next(null, user);
+                } else {
+                    const newUser = new User({
+                        name: profile.displayName,
+                        email: 'qwert@fjhjkh.com',
+                        avatar: profile.photos[0].value,
+                        password: profile.provider + randomPassword(),
+                        social: {
+                            facebook: profile.id,
+                        },
+                        activation: {
+                            active: true
+                        }
+                    });
 
-                newUser
-                    .save()
-                    .then((user) => {
-                        next(null, user);
-                    })
-                    .catch((err) => next(err));
-            }
-        })
-        .catch((err) => next(err));
-}
+                    newUser
+                        .save()
+                        .then((user) => {
+                            next(null, user);
+                        })
+                        .catch((err) => next(err));
+                }
+            })
+            .catch((err) => next(err));
+    }
 );
 
 
@@ -186,7 +187,6 @@ passport.deserializeUser(function(user, next) {
     next(null, user);
 });
 
-// passport.use(google)
 passport.use(slack)
 passport.use(facebook)
 passport.use(instagram)
