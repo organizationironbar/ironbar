@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const User = require("../models/user.model");
 const nodemailer = require("../config/mailer.config");
+const passport = require("passport");
+require("../config/passport.config")
 
 function validateData(userParams) {
     if (userParams.type === "stablishment") {
