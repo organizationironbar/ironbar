@@ -50,6 +50,7 @@ router.get('/stablishments/list', sessionMiddleware.isAuthenticated, stablishmen
 router.get('/stablishments/:id', sessionMiddleware.isAuthenticated, usersController.show);
 
 router.post('/comments', sessionMiddleware.isAuthenticated, commentsController.create)
+router.post('/comments/:id/delete', sessionMiddleware.isAuthenticated, commentsController.delete)
 
 
 // router.get('/stablishments/mapview', stablishmentController.stablishmentsMapView);

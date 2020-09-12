@@ -327,7 +327,17 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.show = (req, res, next) => {
     User.findById(req.params.id)
-        .populate("comments")
+    .populate({
+        path: 'comments',
+        options: {
+          sort: {
+            createdAt: -1
+          }
+        },
+        populate: {
+            path: 'user'
+        }
+      })
         .populate("likes")
         .then((user) => {
             var location

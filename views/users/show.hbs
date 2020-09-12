@@ -1,11 +1,11 @@
-<article class="container">
+<article class="container show">
   <div class="row">
     {{!-- <div class="col-2">
       <img class="w-100 rounded-circle" src="{{user.avatar}}" />
     </div> --}}
 
     <div class="col-10">
-      <img src="{{user.avatar}}" width="100" class="mr-2 rounded-circle" />
+      <img src="{{user.avatar}}" width="100%"  />
       <h1>{{user.name}}</h1>
       <p><strong>Bio:</strong> {{user.bio}}</p>
       <p><strong>Email:</strong> {{user.email}}</p>
@@ -31,6 +31,7 @@
 
       {{/if}}
 
+
       {{#ifEquals currentUser.email user.email}}
       <div>
         <a class="btn btn-secondary" href="/users/{{currentUser._id}}/edit">
@@ -47,18 +48,43 @@
       </div>
       {{/ifEquals}}
 
+ 
 
       {{#if user.comments}}
+   
       <h6 class="little-title">Comments</h6>
 
       {{#each user.comments as |comment|}}
+      {{comment.user.name}}
+      
+   
+        
+
+
       <div class="comment">
 
-        {{comment.text}}
+        
+          <p>{{comment.text}}</p>
+        
       </div>
+       
+
+        {{#ifEquals comment.user.email ../currentUser.email}}
+       
+       <form action="/comments/{{comment._id}}/delete" method="POST">
+            <button type="submit" class="mt-1 btn btn-sm btn-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </form>
+        {{/ifEquals}}
+        
       {{/each}}
+       
 
       {{/if}}
+
+       
+
 
       <form action="/comments" method="POST">
           <input type="hidden" name="stablishment" value="{{user._id}}" />
