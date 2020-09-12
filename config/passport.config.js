@@ -101,8 +101,6 @@ passport.deserializeUser(function(user, next) {
     next(null, user);
 });
 
-passport.use(slack)
 passport.use(facebook)
-passport.use(instagram)
 passport.use(google)
 module.exports = passport.initialize()
