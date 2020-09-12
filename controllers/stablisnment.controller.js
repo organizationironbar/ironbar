@@ -52,14 +52,26 @@ module.exports.stablishmentsList = (req, res, next) => {
     User.find({ type: "stablishment" })
         .or(convertToObjc)
 
-    .populate("comments")
+    
         .populate("likes")
+        .populate({
+            path: 'comments',
+            options: {
+              sort: {
+                createdAt: -1
+              }
+            },
+            populate: {
+                path: 'user'
+            }
+          })
         .then((stablishments) => {
 
-
+console.log(stablishments)
             res.render("stablishments/list", { stablishments, convertToObjc });
         })
         .catch(next);
+        
 };
 
 module.exports.stablishmentsListLocation = (req, res, next) => {
