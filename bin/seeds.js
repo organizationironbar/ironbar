@@ -23,7 +23,6 @@ Promise.all([
 
         for (let i = 0; i < 100; i++) {
             const street = streetsMad[i]
-            console.log('asdasdasdasdçç')
             const imageUrls = imagesURLS[i]
             const randomUser = [{
                     type: 'stablishment',
@@ -40,11 +39,11 @@ Promise.all([
                     },
 
                     address: street["streetName"],
-                    number: Math.floor(Math.random() * 100),
-                    city: faker.address.city(),
-                    zipCode: faker.address.zipCode(),
+                    number: street["streetNumber"],
+                    city: street["city"],
+                    zipCode: street["zipcode"],
 
-                    avatar: imageUrls[i],
+                    avatar: imageUrls,
                     bio: faker.lorem.sentence(),
                     category: modalities[Math.floor(Math.random() * (modalities.length - 1))],
                 },

@@ -329,27 +329,20 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.show = (req, res, next) => {
     User.findById(req.params.id)
-    .populate({
-        path: 'comments',
-        options: {
-          sort: {
-            createdAt: -1
-          }
-        },
-        populate: {
-            path: 'user'
-        }
-      })
         .populate("likes")
+        .populate({
+            path: 'comments',
+            options: {
+                sort: {
+                    createdAt: -1
+                }
+            },
+            populate: {
+                path: 'user'
+            }
+        })
         .then((user) => {
-            var location
-            if (user.type === 'stablishment') {
-                var lat = Number(user.location.lat)
-                var lng = Number(user.location.lng)
-                location = { lat, lng }
-
-            } else location = null
-            res.render("users/show", { user, location });
+            res.render("users/show", { user });
         })
         .catch(next);
 };

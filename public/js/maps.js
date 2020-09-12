@@ -6,26 +6,26 @@ function initMap() {
             lng: -3.4
         }
     });
-    console.log(window.points)
+
     if (window.points) {
-        console.log("hola")
         map = new google.maps.Map(document.getElementById("map"), {
             zoom: 11,
             center: {
-                lat: parseFloat(window.points[0].location.lat),
-                lng: parseFloat(window.points[0].location.lng)
+                lat: parseFloat(window.points[0].lat),
+                lng: parseFloat(window.points[0].lng)
             }
         });
         window.points.forEach(function(stablishment) {
+            console.log("abcdef")
+            console.log(stablishment)
             var position = new google.maps.LatLng({
-                lat: parseFloat(window.points[0].location.lat),
-                lng: parseFloat(window.points[0].location.lng)
+                lat: parseFloat(stablishment.lat),
+                lng: parseFloat(stablishment.lng)
             })
-            console.log("JSONNNNNN : " + JSON.stringify(position))
             new google.maps.Marker({
                 position: {
-                    lat: parseFloat(window.points[0].location.lat),
-                    lng: parseFloat(window.points[0].location.lng)
+                    lat: parseFloat(stablishment.lat),
+                    lng: parseFloat(stablishment.lng)
                 },
                 map: map
             })

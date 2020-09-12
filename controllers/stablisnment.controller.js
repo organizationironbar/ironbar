@@ -31,10 +31,7 @@ function formatLocation(loc) {
 }
 
 module.exports.stablishmentsList = (req, res, next) => {
-
-
     let parsedCategories;
-    console.log("HOLA : " + JSON.stringify(req.body.modality))
     if (typeof req.body.modality == 'string') {
         var convertToObjc = JSON.parse(`[{ "category": "${req.body.modality}" }]`);
     } else if (typeof req.body.modality != 'string' && req.body.modality != undefined) {
@@ -51,27 +48,24 @@ module.exports.stablishmentsList = (req, res, next) => {
 
     User.find({ type: "stablishment" })
         .or(convertToObjc)
-
-    
         .populate("likes")
         .populate({
             path: 'comments',
             options: {
-              sort: {
-                createdAt: -1
-              }
+                sort: {
+                    createdAt: -1
+                }
             },
             populate: {
                 path: 'user'
             }
-          })
+        })
         .then((stablishments) => {
 
-console.log(stablishments)
             res.render("stablishments/list", { stablishments, convertToObjc });
         })
         .catch(next);
-        
+
 };
 
 module.exports.stablishmentsListLocation = (req, res, next) => {
@@ -97,15 +91,15 @@ module.exports.stablishmentsListLocationMap = (req, res, next) => {
 
     req.body ? (location = req.body) : {};
     let city = formatLocation(location);
-    console.log("LOCATION: " + JSON.stringify(city));
-    User.find({ type: "stablishment", city: city })
-        //revisar si necesitamos populate
+    User.find({ type: "stablishment", city: 'Madrid' })
         .populate("comments")
         .populate("likes")
         .then((stablishments) => {
+            var locationArr = []
+            stablishments.map(s => locationArr.push(s.location))
             res.render("stablishments/listmap", {
                 stablishments,
-                pointsJSON: encodeURIComponent(JSON.stringify(stablishments))
+                pointsJSON: encodeURIComponent(JSON.stringify(locationArr))
             });
         })
         .catch(next);
