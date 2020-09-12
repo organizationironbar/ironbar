@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const router = express.Router();
 
@@ -63,7 +62,6 @@ router.post('/comments', sessionMiddleware.isAuthenticated, commentsController.c
 
 
 
-=======
 const express = require('express');
 const router = express.Router();
 
@@ -129,5 +127,4 @@ router.post('/comments/:id/delete', sessionMiddleware.isAuthenticated, commentsC
 
 
 
->>>>>>> 4092f7c1d004d6a57149d364010cfda257294a25
 module.exports = router;

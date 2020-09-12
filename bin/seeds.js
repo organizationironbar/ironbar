@@ -1,5 +1,6 @@
 require("../config/db.config");
 const streetsMad = require('./addressesMad.js')
+const imagesURLS = require('./imagesUrls.js')
 
 const User = require("../models/user.model");
 const Comment = require("../models/comments.model");
@@ -22,6 +23,8 @@ Promise.all([
 
         for (let i = 0; i < 100; i++) {
             const street = streetsMad[i]
+            console.log('asdasdasdasdçç')
+            const imageUrls = imagesURLS[i]
             const randomUser = [{
                     type: 'stablishment',
                     name: faker.name.findName(),
