@@ -89,14 +89,14 @@ const userSchema = new mongoose.Schema({
             "Espectáculos",
         ],
     },
-   
+
     location: {
         lat: {
             type: Number,
             required: isAddressMandatory,
         },
         lng: {
-            type: String,
+            type: Number,
             required: isAddressMandatory,
         },
     },
